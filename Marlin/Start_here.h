@@ -7,8 +7,8 @@
 
 //(Step 1) enable 1 base model
 //GT2560 Boards - vscode: default_envs = megaatmega2560 in platformio.ini
-//#define GTA10       // A10 & Variants - tested 
-#define GTA20       // A20 & Variants - tested 
+#define GTA10       // A10 & Variants - tested 
+//#define GTA20       // A20 & Variants - tested 
 //#define MECREATOR2  // Mecreator2     - tested 
 //#define I3PROA      // PI3A Pro       - testing
 //#define I3PROB      // I3PROB         - testing
@@ -23,8 +23,8 @@
 //#define GTD200      // D200 - testing
 
 //(Step 2) enable 1 driver timing set
-#define STOCK     // Enable A4988   on all drivers (stock drivers)
-//#define T2208    // Enable TMC2208 Standalone on all drivers
+//#define STOCK     // Enable A4988   on all drivers (stock drivers)
+#define T2208    // Enable TMC2208 Standalone on all drivers
 //#define T2209    // Enable TMC2209 Standalone all drivers
 //#define T2130    // Enable TMC2130 Standalone all drivers
 //#define T2160    // Enable TMC2160 Standalone all drivers
@@ -44,12 +44,12 @@
 //#define MIX      // Enable Mixing    2 in 1 - Virtual Motor Control 
 //#define CYCLOPS  // Enable Cyclops   2 in 1 - Physical Motor Control
 //#define DUALEX   // 2 Extruder       2 in 2 - Physical Motor Control 
-#define MIXT     // Enable Mixing    3 in 1 - Virtual Motor Control
+//#define MIXT     // Enable Mixing    3 in 1 - Virtual Motor Control
 //#define CYCLOPST // Enable Cyclops   3 in 1 - Physical Motor Control
 //#define TRIEX    // 3 Extruder       3 in 3 - Physical Motor Control 
  
 //(Step 4) enable 1 probe type or none for manual (stock)
-//#define TOUCHPROBE  // Enable Bltouch Type Probe
+#define TOUCHPROBE  // Enable Bltouch Type Probe
 //#define FMP         // Enable Fixed Mounted Type Probe
 
 //UBL Options
