@@ -121,7 +121,7 @@
 #endif
 
 //Motor direction logic
-#if ENABLED (TMCCHIPS) && DISABLED (MULTIEXTRUDER) || ENABLED (MULTIEXTRUDER)
+#if ENABLED (TMCCHIPS) && DISABLED (MULTIEXTRUDER) || DISABLED (TMCCHIPS) && ENABLED (MULTIEXTRUDER)
   #define INVERTE     // Invert E direction disabe if wrong direction - Geared exturders invert E (stock)
 #endif
 
