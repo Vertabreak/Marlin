@@ -84,10 +84,10 @@
 #endif
 
 //Probe offset logic - suggest you mesure yours and adjust as needed. 
-#if DISABLED (MULTIEXTRUDER)
+#if DISABLED (MULTIEXTRUDER) && ENABLED (TOUCHPROBE) || ENABLED (FMP)
   #define NOZZLE_TO_PROBE_OFFSET { -38, 5, 0 } // Nozzle To Probe offset XYZ A10/A20 
   #define MESH_MAX_X X_BED_SIZE - (MESH_INSET) - 38 //PROBE OFFSET X
-#elif ENABLED (MULTIEXTRUDER)
+#elif ENABLED (MULTIEXTRUDER) && ENABLED (TOUCHPROBE) || ENABLED (FMP)
   #define NOZZLE_TO_PROBE_OFFSET { -40, 0, 0 }  // Nozzle To Probe offset XYZ A10M+T/A20M+T
   #define MESH_MAX_X X_BED_SIZE - (MESH_INSET) - 40 //PROBE OFFSET X
 #endif

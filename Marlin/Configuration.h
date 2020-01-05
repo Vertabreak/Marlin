@@ -319,7 +319,7 @@
  */
 #if ENABLED (MIX) || ENABLED (MIXT) 
   #define MIXING_EXTRUDER 
-  #define MIXING_VIRTUAL_TOOLS 8   // Use the Virtual Tool method with M163 and M164
+  #define MIXING_VIRTUAL_TOOLS 16   // Use the Virtual Tool method with M163 and M164
   #define DIRECT_MIXING_IN_G1      // Allow ABCDHI mix factors in G1 movement commands
   #define GRADIENT_MIX             // Support for gradient mixing with M166 and LCD
   #define GRADIENT_VTOOL           // Add M166 T to use a V-tool index as a Gradient alias
@@ -504,12 +504,12 @@
 #define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 #if ENABLED(PIDTEMP)
-  //#define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  //#define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
+  #define PID_EDIT_MENU         // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
+  #define PID_AUTOTUNE_MENU     // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
   //#define PID_DEBUG             // Sends debug data to the serial port.
   //#define PID_OPENLOOP 1        // Puts PID in open loop. M104/M140 sets the output power from 0 to PID_MAX
   //#define SLOW_PWM_HEATERS      // PWM with very low frequency (roughly 0.125Hz=8s) and minimum state time of approximately 1s useful for heaters driven by a relay
-  //#define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
+  #define PID_PARAMS_PER_HOTEND // Uses separate PID parameters for each extruder (useful for mismatched extruders)
                                   // Set/get with gcode: M301 E[extruder number, 0-2]
   #define PID_FUNCTIONAL_RANGE 10 // If the temperature difference between the target temperature and the actual temperature
                                   // is more than PID_FUNCTIONAL_RANGE then the PID will be shut off and the heater will be set to min/max.
@@ -943,11 +943,11 @@
  * Override with M203
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 30 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
-  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 10, 50 } // ...or, set your own edit limits
+  #define MAX_FEEDRATE_EDIT_VALUES    { 600, 600, 10, 60 } // ...or, set your own edit limits
 #endif
 
 /**
@@ -1005,7 +1005,7 @@
  *   http://blog.kyneticcnc.com/2018/10/computing-junction-deviation-for-marlin.html
  */
 #if DISABLED(CLASSIC_JERK)
-  #define JUNCTION_DEVIATION_MM 0.013 // (mm) Distance from real junction edge
+  #define JUNCTION_DEVIATION_MM 0.01 // (mm) Distance from real junction edge
 #endif
 
 /**
@@ -1640,8 +1640,8 @@
 
 #if ENABLED (BLTOUCH) || ENABLED (FMP)
 #define Z_SAFE_HOMING
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_X_POINT ((X_MAX_POS) / 2)    // X point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT ((Y_MAX_POS) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 
 // Homing speeds (mm/m)
