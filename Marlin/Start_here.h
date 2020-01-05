@@ -23,8 +23,8 @@
 //#define GTD200      // D200 - testing
 
 //(Step 2) enable 1 driver timing set
-//#define STOCK     // Enable A4988   on all drivers (stock drivers)
-#define T2208    // Enable TMC2208 Standalone on all drivers
+#define STOCK     // Enable A4988   on all drivers (stock drivers)
+//#define T2208    // Enable TMC2208 Standalone on all drivers
 //#define T2209    // Enable TMC2209 Standalone all drivers
 //#define T2130    // Enable TMC2130 Standalone all drivers
 //#define T2160    // Enable TMC2160 Standalone all drivers
@@ -49,7 +49,7 @@
 //#define TRIEX    // 3 Extruder       3 in 3 - Physical Motor Control 
  
 //(Step 4) enable 1 probe type or none for manual (stock)
-#define TOUCHPROBE  // Enable Bltouch Type Probe
+//#define TOUCHPROBE  // Enable Bltouch Type Probe
 //#define FMP         // Enable Fixed Mounted Type Probe
 
 //UBL Options
@@ -86,9 +86,12 @@
 #endif
 
 //Bed offset logic - distance from endstop to bed, nozzle on front left bed edge should = X0 Y0
-#if ANY(GTA10, GTA30)
+#if ENABLED (GTA20) && ENABLED (MIXT) || ENABLED (CYCLOPST) || ENABLED (GTA10) && ENABLED (MIXT) || ENABLED (CYCLOPST)
+  #define X_MIN_POS -1   
+  #define Y_MIN_POS -7 
+#elif ENABLED (GTA10) || ENABLED (GTA30)
   #define X_MIN_POS -10
-  #define Y_MIN_POS -5
+  #define Y_MIN_POS -5  
 #elif ENABLED (GTA20)
   #define X_MIN_POS -10   
   #define Y_MIN_POS 0    
