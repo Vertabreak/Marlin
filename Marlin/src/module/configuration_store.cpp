@@ -1934,7 +1934,7 @@ void MarlinSettings::postprocess() {
       // Linear Advance
       //
       {
-        float extruder_advance_K[_MIN(EXTRUDERS, 1)];
+        float extruder_advance_K[MIN(EXTRUDERS, 1)];
         _FIELD_TEST(planner_extruder_advance_K);
         EEPROM_READ(extruder_advance_K);
         #if ENABLED(LIN_ADVANCE)
