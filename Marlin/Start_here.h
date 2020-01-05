@@ -23,8 +23,8 @@
 //#define GTD200      // D200 - testing
 
 //(Step 2) enable 1 driver timing set
-#define STOCK     // Enable A4988   on all drivers (stock drivers)
-//#define T2208    // Enable TMC2208 Standalone on all drivers
+//#define STOCK     // Enable A4988   on all drivers (stock drivers)
+#define T2208    // Enable TMC2208 Standalone on all drivers
 //#define T2209    // Enable TMC2209 Standalone all drivers
 //#define T2130    // Enable TMC2130 Standalone all drivers
 //#define T2160    // Enable TMC2160 Standalone all drivers
@@ -49,7 +49,7 @@
 //#define TRIEX    // 3 Extruder       3 in 3 - Physical Motor Control 
  
 //(Step 4) enable 1 probe type or none for manual (stock)
-//#define TOUCHPROBE  // Enable Bltouch Type Probe
+#define TOUCHPROBE  // Enable Bltouch Type Probe
 //#define FMP         // Enable Fixed Mounted Type Probe
 
 //UBL Options
@@ -78,11 +78,18 @@
 
 //Bed clip logic - use mesh inset or min probe edge to avoid clips not both
 #if ENABLED (BEDCLIPS)
-  //#define MESH_INSET      0   // Move mesh in #mm from edge
-  #define MIN_PROBE_EDGE 10   // Keep probe away from edge #mm by skiping probe points
+  #define MESH_INSET 10   // Move mesh in #mm from edge
 #else
-  //#define MESH_INSET     0    // Move mesh in #mm from edge
-  //#define MIN_PROBE_EDGE 0    // Keep probe away from edge #mm by skiping probe points
+  #define MESH_INSET 0    // Move mesh in #mm from edge
+#endif
+
+//Probe offset logic - suggest you mesure yours and adjust as needed. 
+#if DISABLED (MULTIEXTRUDER)
+  #define NOZZLE_TO_PROBE_OFFSET { -38, 5, 0 } // Nozzle To Probe offset XYZ A10/A20 
+  #define MESH_MAX_X X_BED_SIZE - (MESH_INSET) - 38 //PROBE OFFSET X
+#elif ENABLED (MULTIEXTRUDER)
+  #define NOZZLE_TO_PROBE_OFFSET { -40, 0, 0 }  // Nozzle To Probe offset XYZ A10M+T/A20M+T
+  #define MESH_MAX_X X_BED_SIZE - (MESH_INSET) - 40 //PROBE OFFSET X
 #endif
 
 //Bed offset logic - distance from endstop to bed, nozzle on front left bed edge should = X0 Y0
@@ -98,13 +105,6 @@
 #else 
   #define X_MIN_POS 0        
   #define Y_MIN_POS 0       
-#endif
-
-//Probe offset logic - suggest you mesure yours and adjust as needed. 
-#if DISABLED (MULTIEXTRUDER)
-  #define NOZZLE_TO_PROBE_OFFSET { -38, 5, 0 } // Nozzle To Probe offset XYZ A10/A20 
-#elif ENABLED (MULTIEXTRUDER)
-  #define NOZZLE_TO_PROBE_OFFSET { -40, 0, 0 }  // Nozzle To Probe offset XYZ A10M+T/A20M+T
 #endif
 
 //Steps selection logic
