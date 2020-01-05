@@ -72,7 +72,7 @@
   #define DIRECTDRIVE
 #endif
 
-#if ANY(GTA30, GTE180, GTM201, GTD200 )
+#if ANY(GTA30, GTE180, GTM201, GTD200)
 #define GTM32
 #endif
 
