@@ -2635,7 +2635,7 @@
  *
  * Execute certain G-code commands immediately after power-on.
  */
-//#define STARTUP_COMMANDS "G28"
+#define STARTUP_COMMANDS "G28"
 
 /**
  * G-code Macros
@@ -2661,7 +2661,7 @@
 
 #if ENABLED (PROBE_MANUALLY)
   #define USER_DESC_1 "Manual UBL" //Use nozzle & paper to setup UBL
-  #define USER_GCODE_1 "G28\nG29 P4 R255\nG29 A\nM500"
+  #define USER_GCODE_1 "G29 P4 R255\nG29 A\nM500"
 
   #define USER_DESC_2 "Adjust Point Near" //Adjust nearest mesh point
   #define USER_GCODE_2 "G29 P4\nM500"
@@ -2690,13 +2690,19 @@
   #define USER_DESC_10 "Lin Adv K0.6"
   #define USER_GCODE_10 "M900 K0.6\nM500"
 
+  #define USER_DESC_11 "Unconditional stop"
+  #define USER_GCODE_11 "M0"
+
+  #define USER_DESC_12 "Park Toolhead"
+  #define USER_GCODE_12 "G27"
+
   #else 
 
   #define USER_DESC_1 "Probe UBL" //Use probe to setup UBL.
-  #define USER_GCODE_1 "G28\nG29 P1\nG29 P3\nG29 A\nM500"
+  #define USER_GCODE_1 "G29 P1\nG29 P3\nG29 A\nM500"
 
   #define USER_DESC_2 "Manual UBL" //Use nozzle & paper to setup UBL
-  #define USER_GCODE_2 "G28\nG29 P4 R255\nG29 A\nM500"
+  #define USER_GCODE_2 "G29 P4 R255\nG29 A\nM500"
 
   #define USER_DESC_3 "Adjust Point Near" //Adjust nearest mesh point
   #define USER_GCODE_3 "G29 P4\nM500"
@@ -2727,6 +2733,15 @@
 
   #define USER_DESC_12 "Lin Adv K0.6"
   #define USER_GCODE_12 "M900 K0.6\nM500"
+
+  #define USER_DESC_13 "Unconditional Stop"
+  #define USER_GCODE_13 "M0"
+
+  #define USER_DESC_14 "Park Toolhead"
+  #define USER_GCODE_14 "G27"
+
+  #define USER_DESC_15 "Adv Probe Test"
+  #define USER_GCODE_15 "M48 P20"
 
  #endif
 #endif
