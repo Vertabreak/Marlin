@@ -907,7 +907,7 @@
  *
  * :[2,3,4,5,6,7]
  */
-//#define ENDSTOP_NOISE_THRESHOLD 2
+#define ENDSTOP_NOISE_THRESHOLD 2
 
 //=============================================================================
 //============================== Movement Settings ============================
@@ -1178,7 +1178,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#define MULTIPLE_PROBING 3       // Probe # times take the average
+//#define MULTIPLE_PROBING 3       // Probe # times take the average
 //#define EXTRA_PROBING    1
 
 /**
