@@ -2741,7 +2741,7 @@
   #define USER_GCODE_14 "G27"
 
   #define USER_DESC_15 "Adv Probe Test"
-  #define USER_GCODE_15 "M48 P20"
+  #define USER_GCODE_15 "M48 P50"
 
  #endif
 #endif
