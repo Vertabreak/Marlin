@@ -1167,7 +1167,7 @@
 #define Z_PROBE_SPEED_FAST Z_PROBE_SPEED_SLOW
 
 // Feedrate (mm/m) for the "accurate" probe of each point
-#define Z_PROBE_SPEED_SLOW 240   // Probe speed reduce if accuracy is poor
+#define Z_PROBE_SPEED_SLOW 120   // Probe speed reduce if accuracy is poor
 
 /**
  * Multiple Probing
