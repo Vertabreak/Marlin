@@ -2655,7 +2655,7 @@
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
   #define CUSTOM_USER_MENU_TITLE "Tools"
-  #define USER_SCRIPT_DONE "M117 Running"
+  //#define USER_SCRIPT_DONE "M117 Running"
   //#define USER_SCRIPT_AUDIBLE_FEEDBACK
   #define USER_SCRIPT_RETURN  // Return to status screen after a script
 
@@ -2673,7 +2673,7 @@
   #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_5 "Unconditional stop"
-  #define USER_GCODE_5 "M0"
+  #define USER_GCODE_5 "M0\nM117 "Done""
 
   #define USER_DESC_6 "Park Toolhead"
   #define USER_GCODE_6 "G27\nM117 "Done""
