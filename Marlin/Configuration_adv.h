@@ -2667,10 +2667,10 @@
   #define USER_GCODE_2 "G29 P4\nM500"
 
   #define USER_DESC_3 "PIDtune Hotend"
-  #define USER_GCODE_3 "M303 U1 E0 S250 C8\nM500"
+  #define USER_GCODE_3 "M303 U1 E0 S250 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_4 "PIDtune Bed"
-  #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500"
+  #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_5 "Lin Adv Off"
   #define USER_GCODE_5 "M900 K0\nM500"
@@ -2711,10 +2711,10 @@
   #define USER_GCODE_4 "G29 J2\nM500"
   
   #define USER_DESC_5 "PIDtune Hotend"
-  #define USER_GCODE_5 "M303 U1 E0 S250 C8\nM500"
+  #define USER_GCODE_5 "M303 U1 E0 S250 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_6 "PIDtune Bed"
-  #define USER_GCODE_6 "M303 U1 E-1 S90 C8\nM500"
+  #define USER_GCODE_6 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_7 "Lin Adv Off"
   #define USER_GCODE_7 "M900 K0\nM500"
