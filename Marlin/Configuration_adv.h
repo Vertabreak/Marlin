@@ -2673,7 +2673,7 @@
   #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
 
   #define USER_DESC_5 "Unconditional stop"
-  #define USER_GCODE_5 "M0\nM117 "Done""
+  #define USER_GCODE_5 "M0"
 
   #define USER_DESC_6 "Park Toolhead"
   #define USER_GCODE_6 "G27\nM117 "Done""
