@@ -2652,7 +2652,6 @@
 /**
  * User-defined menu items that execute custom GCode
  */
-#if DISABLED (GTM32)
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
   #define CUSTOM_USER_MENU_TITLE "Tools"
@@ -2709,7 +2708,6 @@
   #define USER_GCODE_9 "M48 P50"
 
  #endif
-#endif
 #endif
 
 /**
