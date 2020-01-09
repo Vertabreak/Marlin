@@ -49,7 +49,7 @@
 //#define TRIEX    // 3 Extruder       3 in 3 - Physical Motor Control 
  
 //(Step 4) enable 1 probe type or none for manual (stock)
-#define TOUCHPROBE  // Enable Bltouch Type Probe
+#define TOUCHPROBE  // Enable Bltouch/3dtouch Type Probe
 //#define FMP         // Enable Fixed Mounted Type Probe
 
 //UBL Options
