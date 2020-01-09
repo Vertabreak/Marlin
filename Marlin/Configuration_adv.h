@@ -2652,6 +2652,7 @@
 /**
  * User-defined menu items that execute custom GCode
  */
+#if DISABLED (GTM32)
 #define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
   #define CUSTOM_USER_MENU_TITLE "Tools"
@@ -2661,53 +2662,54 @@
 
 #if ENABLED (PROBE_MANUALLY)
   #define USER_DESC_1 "Manual UBL" //Use nozzle & paper to setup UBL
-  #define USER_GCODE_1 "G29 P4 R255\nG29 A\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_1 "G29 P4 R255\nG29 A\nM500"
 
   #define USER_DESC_2 "Adjust Point Near" //Adjust nearest mesh point
-  #define USER_GCODE_2 "G29 P4\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_2 "G29 P4\nM500"
 
   #define USER_DESC_3 "PIDtune Hotend"
-  #define USER_GCODE_3 "M303 U1 E0 S250 C8\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_3 "M303 U1 E0 S250 C8\nM500"
 
   #define USER_DESC_4 "PIDtune Bed"
-  #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_4 "M303 U1 E-1 S90 C8\nM500"
 
   #define USER_DESC_5 "Unconditional stop"
   #define USER_GCODE_5 "M0"
 
   #define USER_DESC_6 "Park Toolhead"
-  #define USER_GCODE_6 "G27\nM117 "Done""
+  #define USER_GCODE_6 "G27"
 
   #else 
 
   #define USER_DESC_1 "Probe UBL" //Use probe to setup UBL.
-  #define USER_GCODE_1 "G29 P1\nG29 P3\nG29 A\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_1 "G29 P1\nG29 P3\nG29 A\nM500"
 
   #define USER_DESC_2 "Manual UBL" //Use nozzle & paper to setup UBL
-  #define USER_GCODE_2 "G29 P4 R255\nG29 A\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_2 "G29 P4 R255\nG29 A\nM500"
 
   #define USER_DESC_3 "Adjust Point Near" //Adjust nearest mesh point
-  #define USER_GCODE_3 "G29 P4\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_3 "G29 P4\nM500"
 
   #define USER_DESC_4 "Mesh Tilt" //Tilt mesh to account for changes of knobs under the bed
-  #define USER_GCODE_4 "G29 J2\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_4 "G29 J2\nM500"
   
   #define USER_DESC_5 "PIDtune Hotend"
-  #define USER_GCODE_5 "M303 U1 E0 S250 C8\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_5 "M303 U1 E0 S250 C8\nM500"
 
   #define USER_DESC_6 "PIDtune Bed"
-  #define USER_GCODE_6 "M303 U1 E-1 S90 C8\nM500\nM117 "Beep = Done""
+  #define USER_GCODE_6 "M303 U1 E-1 S90 C8\nM500"
 
   #define USER_DESC_7 "Unconditional Stop"
   #define USER_GCODE_7 "M0"
 
   #define USER_DESC_8 "Park Toolhead"
-  #define USER_GCODE_8 "G27\nM117 "Done""
+  #define USER_GCODE_8 "G27"
 
   #define USER_DESC_9 "Adv Probe Test"
   #define USER_GCODE_9 "M48 P50"
 
  #endif
+#endif
 #endif
 
 /**
