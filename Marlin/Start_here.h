@@ -136,7 +136,3 @@
   //#define INVERTE     // Invert E direction disabe if wrong direction - M & T variants invert E (stock)
   #define INVERTXYZ   // Invert XYZ direction disable if wrong direction. adjust for custom
 #endif
-
-#if MESH_INSET > 0 && MIN_PROBE_EDGE > 0
-  #error Dont Use both MESH_INSET & MIN_PROBE_EDGE at the same time
-#endif
