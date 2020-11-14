@@ -797,7 +797,7 @@
 
 #if ENABLED (TRIEX)
   #define TEMP_SENSOR_1 5
-  #define TEMP_SENSOR_1 5
+  #define TEMP_SENSOR_2 5
 #endif
 
 #define TEMP_SENSOR_3 0
