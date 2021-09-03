@@ -1368,7 +1368,7 @@
 
 // The size of the printable area
 #define X_BED_SIZE 300
-#define Y_BED_SIZE 293
+#define Y_BED_SIZE 292
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS -4
@@ -1853,10 +1853,10 @@
 //
 // Preheat Constants
 //
-// #define PREHEAT_1_LABEL       "PLA"
-// #define PREHEAT_1_TEMP_HOTEND 210
-// #define PREHEAT_1_TEMP_BED     50
-// #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
+#define PREHEAT_1_LABEL       "PLA"
+#define PREHEAT_1_TEMP_HOTEND 210
+#define PREHEAT_1_TEMP_BED     50
+#define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 // #define PREHEAT_2_LABEL       "PETG"
 // #define PREHEAT_2_TEMP_HOTEND 250
