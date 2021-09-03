@@ -469,7 +469,7 @@
  *  Analog Thermistors - 10kΩ pullup - Atypical
  *  -------
  *    99 : 100kΩ  Found on some Wanhao i3 machines with a 10kΩ pull-up resistor
- *
+ * s
  *  Analog RTDs (Pt100/Pt1000)
  *  -------
  *   110 : Pt100  with 1kΩ pullup (atypical)
