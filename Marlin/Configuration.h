@@ -516,7 +516,7 @@
 
 #define TEMP_RESIDENCY_TIME          2  // (seconds) Time to wait for hotend to "settle" in M109
 #define TEMP_WINDOW                  1  // (°C) Temperature proximity for the "temperature reached" timer
-#define TEMP_HYSTERESIS              3  // (°C) Temperature proximity considered "close enough" to the target
+#define TEMP_HYSTERESIS              4  // (°C) Temperature proximity considered "close enough" to the target
 
 #define TEMP_BED_RESIDENCY_TIME     10  // (seconds) Time to wait for bed to "settle" in M190
 #define TEMP_BED_WINDOW              1  // (°C) Temperature proximity for the "temperature reached" timer
@@ -587,7 +587,7 @@
 // Comment the following line to disable PID and enable bang-bang.
 #define PIDTEMP
 #define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
-#define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
+#define PID_MAX 100 // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
 #define PID_K1 0.95      // Smoothing factor within any PID loop
 
 #if ENABLED(PIDTEMP)
@@ -604,9 +604,9 @@
     #define DEFAULT_Ki_LIST {   3.61,   3.61 }
     #define DEFAULT_Kd_LIST { 145.39, 145.39 }
   #else
-    #define  DEFAULT_Kp 33.29
-    #define  DEFAULT_Ki 3.83
-    #define  DEFAULT_Kd 72.28
+    #define DEFAULT_Kp 34.80
+    #define DEFAULT_Ki 6.85
+    #define DEFAULT_Kd 44.18
   #endif
 #endif // PIDTEMP
 
@@ -696,7 +696,7 @@
 #endif // PIDTEMPCHAMBER
 
 #if ANY(PIDTEMP, PIDTEMPBED, PIDTEMPCHAMBER)
-  //#define PID_DEBUG             // Sends debug data to the serial port. Use 'M303 D' to toggle activation.
+  #define PID_DEBUG             // Sends debug data to the serial port. Use 'M303 D' to toggle activation.
   //#define PID_OPENLOOP          // Puts PID in open loop. M104/M140 sets the output power from 0 to PID_MAX
   //#define SLOW_PWM_HEATERS      // PWM with very low frequency (roughly 0.125Hz=8s) and minimum state time of approximately 1s useful for heaters driven by a relay
   #define PID_FUNCTIONAL_RANGE 10 // If the temperature difference between the target temperature and the actual temperature
@@ -1585,10 +1585,10 @@
    */
   #define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE   1.8    // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_NOZZLE_SIZE   0.4    // (mm) Diameter of primary nozzle.
     #define MESH_TEST_LAYER_HEIGHT  0.2    // (mm) Default layer height for G26.
-    #define MESH_TEST_HOTEND_TEMP   250    // (°C) Default nozzle temperature for G26.
-    #define MESH_TEST_BED_TEMP       70    // (°C) Default bed temperature for G26.
+    #define MESH_TEST_HOTEND_TEMP   203    // (°C) Default nozzle temperature for G26.
+    #define MESH_TEST_BED_TEMP       60    // (°C) Default bed temperature for G26.
     #define G26_XY_FEEDRATE          30    // (mm/s) Feedrate for G26 XY moves.
     #define G26_XY_FEEDRATE_TRAVEL   60    // (mm/s) Feedrate for G26 XY travel moves.
     #define G26_RETRACT_MULTIPLIER  6.0    // G26 Q (retraction) used by default between mesh test elements.
@@ -1599,7 +1599,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 5
+  #define GRID_MAX_POINTS_X 6
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Probe along the Y axis, advancing X after each column
@@ -1631,8 +1631,8 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  //#define MESH_INSET 0              // Set Mesh bounds as an inset region of the bed
-  #define GRID_MAX_POINTS_X 5      // Don't use more than 15 points per axis, implementation limited.
+  #define MESH_INSET 5             // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 6      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_HILBERT_CURVE       // Use Hilbert distribution for less travel when probing multiple points
