@@ -347,7 +347,7 @@
 #endif
 
 #if ANY(THERMAL_PROTECTION_HOTENDS, THERMAL_PROTECTION_BED, THERMAL_PROTECTION_CHAMBER, THERMAL_PROTECTION_COOLER)
-  //#define THERMAL_PROTECTION_VARIANCE_MONITOR     // Detect a sensor malfunction preventing temperature updates
+  //#define THERMAL_PROTECTION_VARIANCE_MONITOR     // Detect a sensor malfunction preventing temperature updates //currently broken disabled till patched
 #endif
 
 #if ENABLED(PIDTEMP)
@@ -483,7 +483,7 @@
  * Hotend Idle Timeout
  * Prevent filament in the nozzle from charring and causing a critical jam.
  */
-#define HOTEND_IDLE_TIMEOUT
+//#define HOTEND_IDLE_TIMEOUT
 #if ENABLED(HOTEND_IDLE_TIMEOUT)
   #define HOTEND_IDLE_TIMEOUT_SEC (15*60)   // (seconds) Time without extruder movement to trigger protection
   #define HOTEND_IDLE_MIN_TRIGGER   150     // (°C) Minimum temperature to enable hotend protection
@@ -1937,7 +1937,7 @@
  *
  * Warning: Does not respect endstops!
  */
-#define BABYSTEPPING
+//#define BABYSTEPPING
 #if ENABLED(BABYSTEPPING)
   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
   //#define BABYSTEP_WITHOUT_HOMING
@@ -2254,7 +2254,7 @@
 
 // The ASCII buffer for serial input
 #define MAX_CMD_SIZE 96
-#define BUFSIZE 8
+#define BUFSIZE 4
 
 // Transmission to Host Buffer Size
 // To save 386 bytes of PROGMEM (and TX_BUFFER_SIZE+3 bytes of RAM) set to 0.
@@ -3968,7 +3968,7 @@
  *
  * Implement M486 to allow Marlin to skip objects
  */
-#define CANCEL_OBJECTS
+//#define CANCEL_OBJECTS
 #if ENABLED(CANCEL_OBJECTS)
   #define CANCEL_OBJECTS_REPORTING // Emit the current object as a status message
 #endif
