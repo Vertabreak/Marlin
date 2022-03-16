@@ -51,7 +51,7 @@
   #include "../../lcd/extui/ui_api.h"
 #elif ENABLED(DWIN_CREALITY_LCD)
   #include "../../lcd/e3v2/creality/dwin.h"
-#elif ENABLED(DWIN_CREALITY_LCD_ENHANCED)
+#elif ENABLED(DWIN_LCD_PROUI)
   #include "../../lcd/e3v2/proui/dwin.h"
 #endif
 
@@ -213,8 +213,6 @@ void GcodeSuite::G28() {
 
   TERN_(LASER_MOVE_G28_OFF, cutter.set_inline_enabled(false));  // turn off laser
 
-  TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_HOMING));
-
   #if ENABLED(DUAL_X_CARRIAGE)
     bool IDEX_saved_duplication_state = extruder_duplication_enabled;
     DualXMode IDEX_saved_mode = dual_x_carriage_mode;
@@ -236,7 +234,12 @@ void GcodeSuite::G28() {
     return;
   }
 
-  TERN_(HAS_DWIN_E3V2_BASIC, DWIN_StartHoming());
+  #if ENABLED(FULL_REPORT_TO_HOST_FEATURE)
+    const M_StateEnum old_grblstate = M_State_grbl;
+    set_and_report_grblstate(M_HOMING);
+  #endif
+
+  TERN_(HAS_DWIN_E3V2_BASIC, DWIN_HomingStart());
   TERN_(EXTENSIBLE_UI, ExtUI::onHomingStart());
 
   planner.synchronize();          // Wait for planner moves to finish!
@@ -549,15 +552,15 @@ void GcodeSuite::G28() {
 
   ui.refresh();
 
-  TERN_(HAS_DWIN_E3V2_BASIC, DWIN_CompletedHoming());
-  TERN_(EXTENSIBLE_UI, ExtUI::onHomingComplete());
+  TERN_(HAS_DWIN_E3V2_BASIC, DWIN_HomingDone());
+  TERN_(EXTENSIBLE_UI, ExtUI::onHomingDone());
 
   report_current_position();
 
   if (ENABLED(NANODLP_Z_SYNC) && (doZ || ENABLED(NANODLP_ALL_AXIS)))
     SERIAL_ECHOLNPGM(STR_Z_MOVE_COMP);
 
-  TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(M_IDLE));
+  TERN_(FULL_REPORT_TO_HOST_FEATURE, set_and_report_grblstate(old_grblstate));
 
   #if HAS_L64XX
     // Set L6470 absolute position registers to counts
