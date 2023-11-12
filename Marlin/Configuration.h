@@ -691,19 +691,21 @@
                                   // Set/get with G-code: M301 E[extruder number, 0-2]
 
   // A10M [@thinkyhead]
-  #if ENABLED(PID_PARAMS_PER_HOTEND)
-    #define BANG_MAX 255    // Limit hotend current while in bang-bang mode; 255=full current
+  #if ENABLED(PID_PARAMS_PER_HOTEND) && ENABLED(CHIMERA)
     // Specify between 1 and HOTENDS values per array.
     // If fewer than EXTRUDER values are provided, the last element will be repeated.
-    #define DEFAULT_Kp_LIST {  45.80,  45.80 }
-    #define DEFAULT_Ki_LIST {   3.61,   3.61 }
-    #define DEFAULT_Kd_LIST { 145.39, 145.39 }
-  #else // find your own PID M303 E0 C40 S250 U1
+    #define DEFAULT_Kp_LIST {  33.29,  33.29 }
+    #define DEFAULT_Ki_LIST {   3.83,   3.83 }
+    #define DEFAULT_Kd_LIST {  72.28,  72.28 }
+  #else
     #define  DEFAULT_Kp 32.03
     #define  DEFAULT_Ki 3.62
     #define  DEFAULT_Kd 70.85
-  #endif // PIDTEMP
   #endif
+#else
+  #define BANG_MAX 255    // Limit hotend current while in bang-bang mode; 255=full current
+#endif
+
 /**
  * Model Predictive Control for hotend
  *
