@@ -692,18 +692,7 @@
 
   // A10M [@thinkyhead]
   #if ENABLED(PID_PARAMS_PER_HOTEND)
-    // Specify up to one value per hotend here, according to your setup.
-    // If there are fewer values, the last one applies to the remaining hotends.
-    #define DEFAULT_Kp_LIST {  22.20,  22.20 }
-    #define DEFAULT_Ki_LIST {   1.08,   1.08 }
-    #define DEFAULT_Kd_LIST { 114.00, 114.00 }
-  #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
-    #define DEFAULT_Kd 114.00
-  #endif
-#else
-  #define BANG_MAX 255    // Limit hotend current while in bang-bang mode; 255=full current
+    #define BANG_MAX 255    // Limit hotend current while in bang-bang mode; 255=full current
     // Specify between 1 and HOTENDS values per array.
     // If fewer than EXTRUDER values are provided, the last element will be repeated.
     #define DEFAULT_Kp_LIST {  45.80,  45.80 }
@@ -714,8 +703,7 @@
     #define  DEFAULT_Ki 3.62
     #define  DEFAULT_Kd 70.85
   #endif // PIDTEMP
-#endif
-
+  #endif
 /**
  * Model Predictive Control for hotend
  *
