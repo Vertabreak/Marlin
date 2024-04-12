@@ -1,0 +1,66 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "D:/stuff/Vert-Marlin/Marlin",
+                "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/U8glib-HAL/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/variants/mega",
+                "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/LiquidCrystal",
+                "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/LiquidCrystal_AIP31068",
+                "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/SoftSPIB",
+                "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/U8glib-HAL@0.5.0/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "D:/stuff/Vert-Marlin/Marlin",
+                    "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/U8glib-HAL/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/variants/mega",
+                    "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/LiquidCrystal",
+                    "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/LiquidCrystal_AIP31068",
+                    "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/SoftSPIB",
+                    "D:/stuff/Vert-Marlin/.pio/libdeps/mega2560/U8glib-HAL@0.5.0/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/Vert/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60114",
+                "ARDUINO_AVR_MEGA2560",
+                "__MARLIN_FIRMWARE__",
+                "NDEBUG",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "__AVR_ATmega2560__",
+                ""
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++17",
+            "compilerPath": "C:/Users/Vert/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega2560",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

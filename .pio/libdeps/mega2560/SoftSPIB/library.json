@@ -1,0 +1,20 @@
+{
+  "name": "SoftSPIB",
+  "version": "1.1.2",
+  "keywords": "SoftSPIB, SPI",
+  "description": "Software SPI class for Arduino with support of not 8-bit aligned transfers",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/red-scorp/SoftSPIB.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "atmelavr",
+    "atmelmegaavr",
+    "ststm32",
+    "espressif8266",
+    "pico"
+  ]
+}
