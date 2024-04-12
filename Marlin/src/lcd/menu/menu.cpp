@@ -168,6 +168,9 @@ void MenuEditItemBase::goto_edit_screen(
  */
 void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, const uint8_t top/*=0*/, const uint8_t items/*=0*/) {
   if (currentScreen != screen) {
+
+    wake_display();
+
     thermalManager.set_menu_cold_override(false);
 
     TERN_(IS_DWIN_MARLINUI, did_first_redraw = false);
@@ -219,6 +222,7 @@ void MarlinUI::goto_screen(screenFunc_t screen, const uint16_t encoder/*=0*/, co
     TERN_(HAS_MARLINUI_U8GLIB, drawing_screen = false);
 
     TERN_(HAS_MARLINUI_MENU, encoder_direction_normal());
+    enable_encoder_multiplier(false);
 
     set_selection(false);
   }
@@ -252,7 +256,6 @@ void MarlinUI::synchronize(FSTR_P const fmsg/*=nullptr*/) {
  */
 void scroll_screen(const uint8_t limit, const bool is_menu) {
   ui.encoder_direction_menus();
-  ENCODER_RATE_MULTIPLY(false);
   if (int32_t(ui.encoderPosition) < 0) ui.encoderPosition = 0;
   if (ui.first_page) {
     encoderLine = ui.encoderPosition / (ENCODER_STEPS_PER_MENU_ITEM);
@@ -298,7 +301,7 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
                     , do_probe ? new_probe_offset : hotend_offset[active_extruder].z - diff
                     , new_probe_offset
                   );
-      if (WITHIN(new_offs, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX)) {
+      if (WITHIN(new_offs, PROBE_OFFSET_ZMIN, PROBE_OFFSET_ZMAX)) {
 
         babystep.add_steps(Z_AXIS, babystep_increment);
 
@@ -352,13 +355,13 @@ bool MarlinUI::update_selection() {
 void MenuItem_confirm::select_screen(
   FSTR_P const yes, FSTR_P const no,
   selectFunc_t yesFunc, selectFunc_t noFunc,
-  FSTR_P const pref, const char * const string/*=nullptr*/, FSTR_P const suff/*=nullptr*/
+  FSTR_P const fpre, const char * const string/*=nullptr*/, FSTR_P const fsuf/*=nullptr*/
 ) {
   ui.defer_status_screen();
   const bool ui_selection = !yes ? false : !no || ui.update_selection(),
              got_click = ui.use_click();
   if (got_click || ui.should_draw()) {
-    draw_select_screen(yes, no, ui_selection, pref, string, suff);
+    draw_select_screen(yes, no, ui_selection, fpre, string, fsuf);
     if (got_click) {
       selectFunc_t callFunc = ui_selection ? yesFunc : noFunc;
       if (callFunc) callFunc(); else ui.goto_previous_screen();
