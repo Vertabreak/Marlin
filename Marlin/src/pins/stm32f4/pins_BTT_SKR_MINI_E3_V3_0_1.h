@@ -70,13 +70,6 @@
 #define Z_MIN_PROBE_PIN                     PA1   // PROBE
 
 //
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
-#endif
-
-//
 // Filament Runout Sensor
 //
 #ifndef FIL_RUNOUT_PIN
@@ -90,8 +83,8 @@
   #define POWER_LOSS_PIN                    PC13  // Power Loss Detection: PWR-DET
 #endif
 
-#ifndef BOARD_NEOPIXEL_PIN
-  #define BOARD_NEOPIXEL_PIN                PA14  // LED driving pin
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PA14  // LED driving pin
 #endif
 
 #ifndef PS_ON_PIN

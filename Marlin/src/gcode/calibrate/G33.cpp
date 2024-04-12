@@ -35,6 +35,10 @@
   #include "../../module/probe.h"
 #endif
 
+#if HAS_MULTI_HOTEND
+  #include "../../module/tool_change.h"
+#endif
+
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
@@ -88,7 +92,7 @@ void ac_cleanup() {
 }
 
 void print_signed_float(FSTR_P const prefix, const_float_t f) {
-  SERIAL_ECHO(F("  "), prefix, C(':'));
+  SERIAL_ECHO(F("  "), prefix, AS_CHAR(':'));
   serial_offset(f);
 }
 
@@ -390,7 +394,7 @@ void GcodeSuite::G33() {
 
   const int8_t probe_points = parser.intval('P', DELTA_CALIBRATION_DEFAULT_POINTS);
   if (!WITHIN(probe_points, 0, 10)) {
-    SERIAL_ECHOLNPGM(GCODE_ERR_MSG("(P)oints implausible (0-10)."));
+    SERIAL_ECHOLNPGM("?(P)oints implausible (0-10).");
     return;
   }
 
@@ -409,19 +413,19 @@ void GcodeSuite::G33() {
 
   const float calibration_precision = parser.floatval('C', 0.0f);
   if (calibration_precision < 0) {
-    SERIAL_ECHOLNPGM(GCODE_ERR_MSG("(C)alibration precision implausible (>=0)."));
+    SERIAL_ECHOLNPGM("?(C)alibration precision implausible (>=0).");
     return;
   }
 
   const int8_t force_iterations = parser.intval('F', 0);
   if (!WITHIN(force_iterations, 0, 30)) {
-    SERIAL_ECHOLNPGM(GCODE_ERR_MSG("(F)orce iteration implausible (0-30)."));
+    SERIAL_ECHOLNPGM("?(F)orce iteration implausible (0-30).");
     return;
   }
 
   const int8_t verbose_level = parser.byteval('V', 1);
   if (!WITHIN(verbose_level, 0, 3)) {
-    SERIAL_ECHOLNPGM(GCODE_ERR_MSG("(V)erbose level implausible (0-3)."));
+    SERIAL_ECHOLNPGM("?(V)erbose level implausible (0-3).");
     return;
   }
 

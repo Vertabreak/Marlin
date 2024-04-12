@@ -85,9 +85,8 @@
 #define SD_SCK_PIN                            52  // PB1
 
 //
-// LCD / Controller
+// LCDs and Controllers
 //
-
 #if HAS_WIRED_LCD
   #if ENABLED(ZONESTAR_LCD)
     #define LCD_PINS_RS                        2

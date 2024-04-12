@@ -153,6 +153,7 @@ constexpr DGUS_Addr LIST_CONTROL[] PROGMEM = {
   DGUS_Addr::END
 };
 
+
 constexpr DGUS_Addr LIST_ADJUST[] PROGMEM = {
   DGUS_Addr::ADJUST_Icon_Adjust,
   DGUS_Addr::IO_Icon_ExtruderTemp,

@@ -96,8 +96,10 @@
 //
 // Probe enable
 //
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
+#if ENABLED(PROBE_ENABLE_DISABLE)
+  #ifndef PROBE_ENABLE_PIN
+    #define PROBE_ENABLE_PIN          SERVO0_PIN
+  #endif
 #endif
 
 //
@@ -334,9 +336,8 @@
 #endif // BTT_MOTOR_EXPANSION
 
 //
-// LCD / Controller
+// LCDs and Controllers
 //
-
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)

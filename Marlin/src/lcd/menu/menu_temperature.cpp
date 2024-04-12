@@ -39,6 +39,10 @@
   #include "../../feature/cooler.h"
 #endif
 
+#if ENABLED(SINGLENOZZLE_STANDBY_TEMP)
+  #include "../../module/tool_change.h"
+#endif
+
 //
 // "Temperature" submenu items
 //

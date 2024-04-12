@@ -91,6 +91,7 @@ void FileNavigator::getFiles(uint16_t index) {
   }
   lastindex = index;
 
+
   // Clear currently drawn screen
   for (int i = 0; i < DISPLAY_FILES; i++) {
     for (int j = 0; j < 20; j++)

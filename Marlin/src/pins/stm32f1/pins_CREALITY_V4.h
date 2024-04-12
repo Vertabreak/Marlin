@@ -93,13 +93,6 @@
 #endif
 
 //
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
-#endif
-
-//
 // Filament Runout Sensor
 //
 #ifndef FIL_RUNOUT_PIN
@@ -168,18 +161,6 @@
 #define SDCARD_CONNECTION ONBOARD
 #define ONBOARD_SDIO
 #define NO_SD_HOST_DRIVE                          // This board's SD is only seen by the printer
-
-/**    Debug port
- *       -----
- *       | 1 | VCC
- *       | 2 | PA13
- *       | 3 | PA14
- *       | 4 | GND
- *       -----
- */
-
-#define DEBUG_02_PIN                        PA13
-#define DEBUG_03_PIN                        PA14
 
 #if ANY(RET6_12864_LCD, HAS_DWIN_E3V2, IS_DWIN_MARLINUI)
 

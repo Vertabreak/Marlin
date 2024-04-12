@@ -34,8 +34,6 @@
 #include "../../feature/hotend_idle.h"
 
 void GcodeSuite::M86_report(const bool forReplay/*=true*/) {
-  TERN_(MARLIN_SMALL_BUILD, return);
-
   hotend_idle_settings_t &c = hotend_idle.cfg;
   report_heading(forReplay, F("Hotend Idle Timeout"));
   SERIAL_ECHOLNPGM("  M86"

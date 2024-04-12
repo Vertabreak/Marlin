@@ -181,7 +181,6 @@
 //
 // LCD / Controller
 //
-
 #if IS_RRD_FG_SC
   #define BEEPER_PIN                        PC7   // LCD_BEEPER
   #define BTN_ENC                           PE11  // BTN_ENC

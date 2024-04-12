@@ -60,7 +60,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD && IS_NEWPANEL
 
   #define LCD_PINS_RS                         27

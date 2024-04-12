@@ -149,7 +149,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD && IS_NEWPANEL
 
   #define BEEPER_PIN                          -1

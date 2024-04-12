@@ -74,6 +74,7 @@ class TWIBus {
      */
     uint8_t buffer[TWIBUS_BUFFER_SIZE];
 
+
   public:
     /**
      * @brief Target device address

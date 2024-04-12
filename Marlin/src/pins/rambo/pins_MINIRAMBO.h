@@ -31,12 +31,10 @@
 
 #include "env_validate.h"
 
-#ifndef BOARD_INFO_NAME
-  #if MB(MINIRAMBO_10A)
-    #define BOARD_INFO_NAME "Mini RAMBo 1.0a"
-  #else
-    #define BOARD_INFO_NAME "Mini RAMBo"
-  #endif
+#if MB(MINIRAMBO_10A)
+  #define BOARD_INFO_NAME "Mini RAMBo 1.0a"
+#else
+  #define BOARD_INFO_NAME "Mini RAMBo"
 #endif
 
 //
@@ -48,10 +46,6 @@
 #define Y_MAX_PIN                             24
 #define Z_MIN_PIN                             10
 #define Z_MAX_PIN                             23
-
-#if HAS_I_AXIS
-  #define I_STOP_PIN                          30  // X_MAX (for now)
-#endif
 
 //
 // Z Probe (when not Z_MIN_PIN)
@@ -134,15 +128,9 @@
 //
 #if HAS_CUTTER
   // Use P1 connector for spindle pins
-  #ifndef SPINDLE_LASER_PWM_PIN
-    #define SPINDLE_LASER_PWM_PIN              9  // Hardware PWM
-  #endif
-  #ifndef SPINDLE_LASER_ENA_PIN
-    #define SPINDLE_LASER_ENA_PIN             18  // Pullup!
-  #endif
-  #ifndef SPINDLE_DIR_PIN
-    #define SPINDLE_DIR_PIN                   19
-  #endif
+  #define SPINDLE_LASER_PWM_PIN                9  // Hardware PWM
+  #define SPINDLE_LASER_ENA_PIN               18  // Pullup!
+  #define SPINDLE_DIR_PIN                     19
 #endif
 
 //
@@ -159,7 +147,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD || TOUCH_UI_ULTIPANEL
 
   #if !MB(MINIRAMBO_10A)
@@ -185,7 +172,7 @@
 
       #define SD_DETECT_PIN                   72
 
-    #else // !MINIRAMBO_10A
+    #else                                         // !MINIRAMBO_10A
 
       // AUX-4
       #define BEEPER_PIN                      84

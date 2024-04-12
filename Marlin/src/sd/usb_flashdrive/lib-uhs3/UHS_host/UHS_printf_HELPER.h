@@ -167,6 +167,8 @@ extern "C" {
 #error no STDIO
 #endif // defined(ARDUINO_ARCH_PIC32)
 
+
+
 #ifdef __AVR__
 // The only wierdo in the bunch...
 void UHS_AVR_printf_HELPER_init() {

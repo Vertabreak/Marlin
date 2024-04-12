@@ -29,12 +29,10 @@
 
 #include "../../../inc/MarlinConfigPre.h"
 
-#if ENABLED(DWIN_LCD_PROUI)
+#if ALL(DWIN_LCD_PROUI, HAS_LOCKSCREEN)
 
 #include "dwin_defines.h"
-
-#if HAS_LOCKSCREEN
-
+#include "dwinui.h"
 #include "dwin.h"
 #include "lockscreen.h"
 
@@ -74,5 +72,4 @@ void LockScreen::onEncoder(EncoderState encoder_diffState) {
   dwinUpdateLCD();
 }
 
-#endif // HAS_LOCKSCREEN
-#endif // DWIN_LCD_PROUI
+#endif // DWIN_LCD_PROUI && HAS_LOCKSCREEN

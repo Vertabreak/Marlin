@@ -208,9 +208,8 @@
 #endif
 
 //
-// LCD / Controller
+// LCDs and Controllers
 //
-
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -304,8 +303,8 @@
 //
 // NeoPixel LED
 //
-#ifndef BOARD_NEOPIXEL_PIN
-  #define BOARD_NEOPIXEL_PIN                PD0
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PD0
 #endif
 
 #ifndef NEOPIXEL2_PIN

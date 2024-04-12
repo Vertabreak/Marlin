@@ -26,6 +26,10 @@
  * This may be combined with related G-codes if features are consolidated.
  */
 
+typedef struct {
+  float unload_length, load_length;
+} fil_change_settings_t;
+
 #include "../inc/MarlinConfigPre.h"
 
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
@@ -44,20 +48,18 @@ enum PauseMessage : char {
   PAUSE_MESSAGE_PARKING,
   PAUSE_MESSAGE_CHANGING,
   PAUSE_MESSAGE_WAITING,
+  PAUSE_MESSAGE_UNLOAD,
   PAUSE_MESSAGE_INSERT,
   PAUSE_MESSAGE_LOAD,
-  PAUSE_MESSAGE_UNLOAD,
   PAUSE_MESSAGE_PURGE,
   PAUSE_MESSAGE_OPTION,
   PAUSE_MESSAGE_RESUME,
-  PAUSE_MESSAGE_HEAT,
-  PAUSE_MESSAGE_HEATING,
   PAUSE_MESSAGE_STATUS,
-  PAUSE_MESSAGE_COUNT
+  PAUSE_MESSAGE_HEAT,
+  PAUSE_MESSAGE_HEATING
 };
 
 #if M600_PURGE_MORE_RESUMABLE
-  // Input methods can Purge More, Resume, or request input
   enum PauseMenuResponse : char {
     PAUSE_RESPONSE_WAIT_FOR,
     PAUSE_RESPONSE_EXTRUDE_MORE,
@@ -67,20 +69,7 @@ enum PauseMessage : char {
   extern PauseMode pause_mode;
 #endif
 
-typedef struct FilamentChangeSettings {
-  #if ENABLED(CONFIGURE_FILAMENT_CHANGE)
-    float load_length, unload_length;
-  #else
-    static constexpr float load_length = FILAMENT_CHANGE_FAST_LOAD_LENGTH,
-                           unload_length = FILAMENT_CHANGE_UNLOAD_LENGTH;
-  #endif
-} fil_change_settings_t;
-
-#if ENABLED(CONFIGURE_FILAMENT_CHANGE)
-  extern fil_change_settings_t fc_settings[EXTRUDERS];
-#else
-  constexpr fil_change_settings_t fc_settings[EXTRUDERS];
-#endif
+extern fil_change_settings_t fc_settings[EXTRUDERS];
 
 extern uint8_t did_pause_print;
 
@@ -107,7 +96,7 @@ void wait_for_confirmation(
 void resume_print(
   const_float_t   slow_load_length=0,                         // (mm) Slow Load Length for finishing move
   const_float_t   fast_load_length=0,                         // (mm) Fast Load Length for initial move
-  const_float_t   purge_length=ADVANCED_PAUSE_PURGE_LENGTH,   // (mm) Purge length
+  const_float_t   extrude_length=ADVANCED_PAUSE_PURGE_LENGTH, // (mm) Purge length
   const int8_t    max_beep_count=0,                           // Beep alert for attention
   const celsius_t targetTemp=0                                // (°C) A target temperature for the hotend
   DXC_PARAMS                                                  // Dual-X-Carriage extruder index
@@ -116,7 +105,7 @@ void resume_print(
 bool load_filament(
   const_float_t   slow_load_length=0,                         // (mm) Slow Load Length for finishing move
   const_float_t   fast_load_length=0,                         // (mm) Fast Load Length for initial move
-  const_float_t   purge_length=0,                             // (mm) Purge length
+  const_float_t   extrude_length=0,                           // (mm) Purge length
   const int8_t    max_beep_count=0,                           // Beep alert for attention
   const bool      show_lcd=false,                             // Set LCD status messages?
   const bool      pause_for_user=false,                       // Pause for user before returning?

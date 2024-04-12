@@ -93,7 +93,6 @@
 //
 // LCD / Controller
 //
-
 #if ANY(VIKI2, miniVIKI)
 
   #define BEEPER_PIN                       P1_31

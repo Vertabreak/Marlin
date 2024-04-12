@@ -199,7 +199,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD || TOUCH_UI_ULTIPANEL
 
   #define KILL_PIN                            80
@@ -233,7 +232,7 @@
 
       #define LCD_SCREEN_ROTATE              180  // 0, 90, 180, 270
 
-    #else // !VIKI2 && !miniVIKI
+    #else                                         // !VIKI2 && !miniVIKI
 
       #define BEEPER_PIN                      79  // AUX-4
 
@@ -254,7 +253,7 @@
       #define BTN_ENC_EN             LCD_PINS_D7  // Detect the presence of the encoder
     #endif
 
-  #else // !IS_NEWPANEL - old style panel with shift register
+  #else                                           // !IS_NEWPANEL - old style panel with shift register
 
     // No Beeper added
     #define BEEPER_PIN                        33

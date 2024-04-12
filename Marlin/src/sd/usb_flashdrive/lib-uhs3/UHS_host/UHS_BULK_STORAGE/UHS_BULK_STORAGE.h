@@ -27,6 +27,7 @@ e-mail   :  support@circuitsathome.com
 #ifndef __UHS_BULK_STORAGE_H__
 #define __UHS_BULK_STORAGE_H__
 
+
 ////////////////////////////////////////////////////////////////////////////////
 // Define any of these options at the top of your sketch to override
 // the defaults contained herewith. Do NOT do modifications here.
@@ -200,6 +201,7 @@ public:
         uint8_t SCSITransaction6(SCSI_CDB6_t *cdb, uint16_t buf_size, void *buf, uint8_t dir);
         uint8_t SCSITransaction10(SCSI_CDB10_t *cdb, uint16_t buf_size, void *buf, uint8_t dir);
 
+
         // Configure and internal methods, these should never be called by a user's sketch.
         uint8_t Start();
         bool OKtoEnumerate(ENUMERATION_INFO *ei);
@@ -209,9 +211,11 @@ public:
                 return bAddress;
         };
 
+
         void Poll();
 
         void DriverDefaults();
+
 
 private:
         void Reset();

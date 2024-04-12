@@ -47,6 +47,7 @@ namespace FTDI {
      * pointer to the next character */
 
     utf8_char_t get_utf8_char_and_inc(const char *&c);
+    utf8_char_t get_utf8_char_and_inc(char *&c);
 
     /* Returns the next character in a UTF8 string, without incrementing */
 

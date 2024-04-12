@@ -32,9 +32,7 @@ typedef struct {
     timeout       = HOTEND_IDLE_TIMEOUT_SEC;
     trigger       = HOTEND_IDLE_MIN_TRIGGER;
     nozzle_target = HOTEND_IDLE_NOZZLE_TARGET;
-    #if HAS_HEATED_BED
-      bed_target  = HOTEND_IDLE_BED_TARGET;
-    #endif
+    bed_target    = HOTEND_IDLE_BED_TARGET;
   }
 } hotend_idle_settings_t;
 

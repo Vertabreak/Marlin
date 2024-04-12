@@ -23,10 +23,6 @@
 
 #include "env_validate.h"
 
-//
-// https://github.com/bigtreetech/SKR-3
-//
-
 // If you have the BigTreeTech driver expansion module, enable BTT_MOTOR_EXPANSION
 // https://github.com/bigtreetech/BTT-Expansion-module/tree/master/BTT%20EXP-MOT
 //#define BTT_MOTOR_EXPANSION
@@ -431,9 +427,8 @@
 #endif // BTT_MOTOR_EXPANSION
 
 //
-// LCD / Controller
+// LCDs and Controllers
 //
-
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -541,7 +536,7 @@
       #define TFT_BACKLIGHT_PIN LCD_BACKLIGHT_PIN
 
       #define TOUCH_BUTTONS_HW_SPI
-      #define TOUCH_BUTTONS_HW_SPI_DEVICE      1
+      #define TOUCH_BUTTONS_HW_SPI_DEVICE 1
 
       #define TOUCH_CS_PIN           EXP1_05_PIN  // SPI1_NSS
       #define TOUCH_SCK_PIN          EXP2_02_PIN  // SPI1_SCK
@@ -632,8 +627,8 @@
 //
 // NeoPixel LED
 //
-#ifndef BOARD_NEOPIXEL_PIN
-  #define BOARD_NEOPIXEL_PIN                PE6
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PE6
 #endif
 
 #if ENABLED(WIFISUPPORT)

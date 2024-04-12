@@ -103,7 +103,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD
 
   #define LCD_PINS_RS                         42

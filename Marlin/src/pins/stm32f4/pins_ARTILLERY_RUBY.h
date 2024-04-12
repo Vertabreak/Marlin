@@ -125,7 +125,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD
   #if ANY(MKS_12864OLED, MKS_12864OLED_SSD1306)
     #define LCD_PINS_DC                     PB8   // Set as output on init

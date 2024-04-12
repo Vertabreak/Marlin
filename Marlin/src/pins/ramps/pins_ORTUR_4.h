@@ -79,7 +79,6 @@
 //
 // LCD / Controller
 //
-
 #if IS_RRD_FG_SC
   #define BEEPER_PIN                          35
 

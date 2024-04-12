@@ -201,6 +201,8 @@ typedef struct {
   uint16_t wLength; //   6      Depends on bRequest
 } __attribute__((packed)) SETUP_PKT, *PSETUP_PKT;
 
+
+
 // Base class for incoming data parser
 
 class USBReadParser {

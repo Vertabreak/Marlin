@@ -20,9 +20,9 @@
  *
  */
 
-/*************************************
- * ui_api.cpp - Shared ExtUI methods *
- *************************************/
+/**************
+ * ui_api.cpp *
+ **************/
 
 /****************************************************************************
  *   Written By Marcio Teixeira 2018 - Aleph Objects, Inc.                  *
@@ -106,7 +106,7 @@
   #include "../../feature/host_actions.h"
 #endif
 
-#if ENABLED(ADVANCED_PAUSE_FEATURE)
+#if M600_PURGE_MORE_RESUMABLE
   #include "../../feature/pause.h"
 #endif
 
@@ -672,18 +672,16 @@ namespace ExtUI {
     return planner.settings.axis_steps_per_mm[E_AXIS_N(extruder - E0)];
   }
 
-  #if ENABLED(EDITABLE_STEPS_PER_UNIT)
-    void setAxisSteps_per_mm(const_float_t value, const axis_t axis) {
-      planner.settings.axis_steps_per_mm[axis] = value;
-      planner.refresh_positioning();
-    }
+  void setAxisSteps_per_mm(const_float_t value, const axis_t axis) {
+    planner.settings.axis_steps_per_mm[axis] = value;
+    planner.refresh_positioning();
+  }
 
-    void setAxisSteps_per_mm(const_float_t value, const extruder_t extruder) {
-      UNUSED(extruder);
-      planner.settings.axis_steps_per_mm[E_AXIS_N(extruder - E0)] = value;
-      planner.refresh_positioning();
-    }
-  #endif
+  void setAxisSteps_per_mm(const_float_t value, const extruder_t extruder) {
+    UNUSED(extruder);
+    planner.settings.axis_steps_per_mm[E_AXIS_N(extruder - E0)] = value;
+    planner.refresh_positioning();
+  }
 
   feedRate_t getAxisMaxFeedrate_mm_s(const axis_t axis) {
     return planner.settings.max_feedrate_mm_s[axis];
@@ -897,7 +895,7 @@ namespace ExtUI {
 
   void setZOffset_mm(const_float_t value) {
     #if HAS_BED_PROBE
-      if (WITHIN(value, PROBE_OFFSET_ZMIN, PROBE_OFFSET_ZMAX))
+      if (WITHIN(value, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX))
         probe.offset.z = value;
     #elif ENABLED(BABYSTEP_DISPLAY_TOTAL)
       babystep.add_mm(Z_AXIS, value - getZOffset_mm());
@@ -1116,39 +1114,10 @@ namespace ExtUI {
   }
   void setUserConfirmed() { TERN_(HAS_RESUME_CONTINUE, wait_for_user = false); }
 
-  #if ENABLED(ADVANCED_PAUSE_FEATURE)
+  #if M600_PURGE_MORE_RESUMABLE
     void setPauseMenuResponse(PauseMenuResponse response) { pause_menu_response = response; }
-    PauseMode getPauseMode() { return pause_mode; }
-
     PauseMessage pauseModeStatus = PAUSE_MESSAGE_STATUS;
-
-    void stdOnPauseMode(
-      const PauseMessage message,
-      const PauseMode mode/*=PAUSE_MODE_SAME*/,
-      const uint8_t extruder/*=active_extruder*/
-    ) {
-      if (mode != PAUSE_MODE_SAME) pause_mode = mode;
-      pauseModeStatus = message;
-      switch (message) {
-        case PAUSE_MESSAGE_PARKING:  onUserConfirmRequired(GET_TEXT_F(MSG_PAUSE_PRINT_PARKING)); break;
-        case PAUSE_MESSAGE_CHANGING: onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_INIT)); break;
-        case PAUSE_MESSAGE_UNLOAD:   onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_UNLOAD)); break;
-        case PAUSE_MESSAGE_WAITING:  onUserConfirmRequired(GET_TEXT_F(MSG_ADVANCED_PAUSE_WAITING)); break;
-        case PAUSE_MESSAGE_INSERT:   onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_INSERT)); break;
-        case PAUSE_MESSAGE_LOAD:     onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_LOAD)); break;
-        case PAUSE_MESSAGE_PURGE:    onUserConfirmRequired(
-                                       GET_TEXT_F(TERN(ADVANCED_PAUSE_CONTINUOUS_PURGE, MSG_FILAMENT_CHANGE_CONT_PURGE, MSG_FILAMENT_CHANGE_PURGE))
-                                     );
-                                     break;
-        case PAUSE_MESSAGE_RESUME:   onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_RESUME)); break;
-        case PAUSE_MESSAGE_HEAT:     onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_HEAT)); break;
-        case PAUSE_MESSAGE_HEATING:  onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_HEATING)); break;
-        case PAUSE_MESSAGE_OPTION:   onUserConfirmRequired(GET_TEXT_F(MSG_FILAMENT_CHANGE_OPTION_HEADER)); break;
-        case PAUSE_MESSAGE_STATUS:   break;
-        default: break;
-      }
-    }
-
+    PauseMode getPauseMode() { return pause_mode;}
   #endif
 
   void printFile(const char *filename) {
@@ -1254,33 +1223,18 @@ namespace ExtUI {
 
 } // namespace ExtUI
 
-//
-// MarlinUI passthroughs to ExtUI
-//
-#if DISABLED(HAS_DWIN_E3V2)
-  void MarlinUI::init_lcd() { ExtUI::onStartup(); }
+// At the moment we hook into MarlinUI methods, but this could be cleaned up in the future
 
-  void MarlinUI::update() { ExtUI::onIdle(); }
+void MarlinUI::init_lcd() { ExtUI::onStartup(); }
 
-  void MarlinUI::kill_screen(FSTR_P const error, FSTR_P const component) {
-    using namespace ExtUI;
-    if (!flags.printer_killed) {
-      flags.printer_killed = true;
-      onPrinterKilled(error, component);
-    }
+void MarlinUI::update() { ExtUI::onIdle(); }
+
+void MarlinUI::kill_screen(FSTR_P const error, FSTR_P const component) {
+  using namespace ExtUI;
+  if (!flags.printer_killed) {
+    flags.printer_killed = true;
+    onPrinterKilled(error, component);
   }
-#endif
-
-#if ENABLED(ADVANCED_PAUSE_FEATURE)
-
-  void MarlinUI::pause_show_message(
-    const PauseMessage message,
-    const PauseMode mode/*=PAUSE_MODE_SAME*/,
-    const uint8_t extruder/*=active_extruder*/
-  ) {
-    ExtUI::onPauseMode(message, mode, extruder);
-  }
-
-#endif
+}
 
 #endif // EXTENSIBLE_UI

@@ -24,11 +24,8 @@
 /**
  * power.h - power control
  */
-#if PIN_EXISTS(PS_ON_EDM) || (PIN_EXISTS(PS_ON1_EDM) && ENABLED(PSU_OFF_REDUNDANT))
-  #define PSU_TRACK_STATE_MS 1
-#endif
 
-#if ANY(AUTO_POWER_CONTROL, POWER_OFF_TIMER, PSU_TRACK_STATE_MS)
+#if ANY(AUTO_POWER_CONTROL, POWER_OFF_TIMER)
   #include "../core/millis_t.h"
 #endif
 
@@ -39,10 +36,6 @@ class Power {
     static void init();
     static void power_on();
     static void power_off();
-
-    #if PSU_TRACK_STATE_MS
-      static millis_t last_state_change_ms;
-    #endif
 
     #if ANY(POWER_OFF_TIMER, POWER_OFF_WAIT_FOR_COOLDOWN)
       #if ENABLED(POWER_OFF_TIMER)

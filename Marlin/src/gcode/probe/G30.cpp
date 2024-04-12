@@ -34,8 +34,8 @@
   #include "../../feature/probe_temp_comp.h"
 #endif
 
-#if ANY(DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
-  #define VERBOSE_SINGLE_PROBE
+#if HAS_MULTI_HOTEND
+  #include "../../module/tool_change.h"
 #endif
 
 /**
@@ -70,7 +70,9 @@ void GcodeSuite::G30() {
 
     remember_feedrate_scaling_off();
 
-    TERN_(VERBOSE_SINGLE_PROBE, process_subcommands_now(F("G28O")));
+    #if ANY(DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
+      process_subcommands_now(F("G28O"));
+    #endif
 
     const ProbePtRaise raise_after = parser.boolval('E', true) ? PROBE_PT_STOW : PROBE_PT_NONE;
 
@@ -85,7 +87,9 @@ void GcodeSuite::G30() {
         F(  " Z:"), p_float_t(measured_z, 3)
       );
       msg.echoln();
-      TERN_(VERBOSE_SINGLE_PROBE, ui.set_status(msg));
+      #if ANY(DWIN_LCD_PROUI, DWIN_CREALITY_LCD_JYERSUI)
+        ui.set_status(msg);
+      #endif
     }
 
     restore_feedrate_and_scaling();

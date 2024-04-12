@@ -68,13 +68,6 @@
 #define Z_MAX_PIN                           PB12
 
 //
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
-#endif
-
-//
 // Steppers
 //
 #define X_ENABLE_PIN                        PC15  // Driver0
@@ -216,6 +209,9 @@
   #define KILL_PIN                        PW_DET
   #define KILL_PIN_STATE                    HIGH
 #endif
+
+// Random Info
+#define USB_SERIAL                          -1    // USB Serial
 
 /**
  *                  ------                                      ------

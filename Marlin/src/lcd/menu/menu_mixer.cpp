@@ -43,7 +43,7 @@
 
   void _lcd_mixer_gradient_z_edit(const bool isend) {
     ui.defer_status_screen();
-    ui.enable_encoder_multiplier(true);
+    ENCODER_RATE_MULTIPLY(true);
 
     float &zvar = isend ? mixer.gradient.end_z : mixer.gradient.start_z;
 

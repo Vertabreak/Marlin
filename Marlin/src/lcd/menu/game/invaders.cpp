@@ -193,6 +193,7 @@ inline void reset_invaders() {
   reset_bullets();
 }
 
+
 inline void spawn_ufo() {
   idat.ufov = random(0, 2) ? 1 : -1;
   idat.ufox = idat.ufov > 0 ? -(UFO_W) : LCD_PIXEL_WIDTH - 1;

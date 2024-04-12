@@ -29,7 +29,6 @@
 
 #if E_STEPPERS > 5
   #error "PANDA ZHU supports up to 5 E steppers."
-#endif
 #if HAS_MULTI_HOTEND
   #error "PANDA ZHU only supports 1 hotend."
 #endif

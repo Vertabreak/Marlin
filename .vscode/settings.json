@@ -1,0 +1,5 @@
+{
+    "cmake.configureOnOpen": false,
+    "cmake.sourceDirectory": "${workspaceFolder}/buildroot/share/cmake",
+    "C_Cpp.errorSquiggles": "disabled"
+}

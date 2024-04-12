@@ -122,7 +122,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD
   // OVERLORD OLED pins
   #define LCD_PINS_RS                         20

@@ -763,7 +763,7 @@
         SERIAL_CHAR('\t');
         st.printLabel();
         SERIAL_CHAR('\t');
-        print_hex_long(drv_status, ':', true);
+        print_hex_long(drv_status, ':');
         if (drv_status == 0xFFFFFFFF || drv_status == 0) SERIAL_ECHOPGM("\t Bad response!");
         SERIAL_EOL();
         break;

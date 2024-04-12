@@ -46,9 +46,7 @@ void FilamentRunoutScreen::onRedraw(draw_mode_t what) {
 
 bool FilamentRunoutScreen::onTouchHeld(uint8_t tag) {
   using namespace ExtUI;
-  #if HAS_FILAMENT_RUNOUT_DISTANCE
-    const float increment = getIncrement();
-  #endif
+  const float increment = getIncrement();
   switch (tag) {
     case 2: setFilamentRunoutEnabled(!getFilamentRunoutEnabled()); break;
     #if HAS_FILAMENT_RUNOUT_DISTANCE

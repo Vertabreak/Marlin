@@ -25,6 +25,7 @@
   extern "C" {
 #endif
 
+
 void lv_draw_wifi_tips();
 void lv_clear_wifi_tips();
 

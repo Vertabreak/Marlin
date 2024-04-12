@@ -63,11 +63,8 @@ public:
   static void lcdBLKAdjust(DGUS_VP_Variable &var, void *val_ptr);
   static void sdFileBack(DGUS_VP_Variable &var, void *val_ptr);
 
-  #if ENABLED(EDITABLE_STEPS_PER_UNIT)
-    static void handleStepPerMMChanged(DGUS_VP_Variable &var, void *val_ptr);
-    static void handleStepPerMMExtruderChanged(DGUS_VP_Variable &var, void *val_ptr);
-  #endif
-
+  static void handleStepPerMMChanged(DGUS_VP_Variable &var, void *val_ptr);
+  static void handleStepPerMMExtruderChanged(DGUS_VP_Variable &var, void *val_ptr);
   static void handleMaxSpeedChange(DGUS_VP_Variable &var, void *val_ptr);
   static void handleExtruderMaxSpeedChange(DGUS_VP_Variable &var, void *val_ptr);
   static void handleAccChange(DGUS_VP_Variable &var, void *val_ptr);

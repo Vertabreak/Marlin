@@ -166,7 +166,6 @@
 //
 // LCD / Controller
 //
-
 #if ANY(BOARD_REV_1_0, BOARD_REV_1_1_TO_1_3)
 
   #define LCD_PINS_RS                         24
@@ -196,7 +195,7 @@
 
     #define SD_DETECT_PIN                     38
 
-  #else // !IS_NEWPANEL - Old style panel with shift register
+  #else                                           // !IS_NEWPANEL - Old style panel with shift register
 
     // Buttons attached to a shift register
     #define SHIFT_CLK_PIN                     38

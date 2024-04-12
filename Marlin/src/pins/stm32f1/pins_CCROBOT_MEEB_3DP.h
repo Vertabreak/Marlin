@@ -121,7 +121,7 @@
 #define FAN2_PIN                            PB9   // FAN  (fan1 on board) controller cool fan
 
 // One NeoPixel onboard and a connector for other NeoPixels
-#define BOARD_NEOPIXEL_PIN                  PC7   // The NEOPIXEL LED driving pin
+#define NEOPIXEL_PIN                        PC7   // The NEOPIXEL LED driving pin
 
 /**
  *       ------
@@ -145,7 +145,6 @@
 //
 // LCD / Controller
 //
-
 #if ENABLED(CR10_STOCKDISPLAY)
   #define BEEPER_PIN                 EXP1_01_PIN
   #define BTN_EN1                    EXP1_03_PIN

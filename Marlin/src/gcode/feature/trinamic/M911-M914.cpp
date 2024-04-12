@@ -378,8 +378,6 @@
   }
 
   void GcodeSuite::M913_report(const bool forReplay/*=true*/) {
-    TERN_(MARLIN_SMALL_BUILD, return);
-
     report_heading(forReplay, F(STR_HYBRID_THRESHOLD));
 
     auto say_M913 = [](const bool forReplay) {
@@ -567,8 +565,6 @@
   }
 
   void GcodeSuite::M914_report(const bool forReplay/*=true*/) {
-    TERN_(MARLIN_SMALL_BUILD, return);
-
     report_heading(forReplay, F(STR_STALLGUARD_THRESHOLD));
 
     auto say_M914 = [](const bool forReplay) {

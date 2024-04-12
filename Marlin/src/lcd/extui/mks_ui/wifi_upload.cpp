@@ -650,14 +650,12 @@ void resetWiFiForUpload(int begin_or_end) {
   //#if 0
   uint32_t start = getWifiTick();
 
-  #if PIN_EXISTS(WIFI_IO0)
-    if (begin_or_end == 0) {
-      SET_OUTPUT(WIFI_IO0_PIN);
-      WRITE(WIFI_IO0_PIN, LOW);
-    }
-    else
-      SET_INPUT_PULLUP(WIFI_IO0_PIN);
-  #endif
+  if (begin_or_end == 0) {
+    SET_OUTPUT(WIFI_IO0_PIN);
+    WRITE(WIFI_IO0_PIN, LOW);
+  }
+  else
+    SET_INPUT_PULLUP(WIFI_IO0_PIN);
 
   WIFI_RESET();
   while (getWifiTickDiff(start, getWifiTick()) < 500) { /* nada */ }

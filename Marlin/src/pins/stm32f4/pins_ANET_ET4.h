@@ -133,7 +133,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_SPI_TFT || HAS_FSMC_TFT
   #define TFT_RESET_PIN                     PE6
   #define TFT_CS_PIN                        PD7

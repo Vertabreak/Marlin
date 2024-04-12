@@ -107,7 +107,7 @@ void onDrawMenuItem(MenuItem* menuitem, int8_t line) {
   if (menuitem->icon) DWINUI::drawIcon(menuitem->icon, ICOX, MBASE(line) - 3);
   if (menuitem->frameid)
     dwinFrameAreaCopy(menuitem->frameid, menuitem->frame.left, menuitem->frame.top, menuitem->frame.right, menuitem->frame.bottom, LBLX, MBASE(line));
-  else
+  else if (menuitem->caption)
     DWINUI::drawString(LBLX, MBASE(line) - 1, menuitem->caption);
   dwinDrawHLine(hmiData.colorSplitLine, 16, MYPOS(line + 1), 240);
 }
@@ -263,7 +263,7 @@ void setPFloatOnClick(const float lo, const float hi, uint8_t dp, void (*apply)(
 
 // Generic menu control using the encoder
 void hmiMenu() {
-  const EncoderState encoder_diffState = get_encoder_state();
+  EncoderState encoder_diffState = get_encoder_state();
   if (currentMenu) {
     if (encoder_diffState == ENCODER_DIFF_NO) return;
     if (encoder_diffState == ENCODER_DIFF_ENTER)
@@ -280,8 +280,10 @@ void hmiMenu() {
 //  1 : live change
 //  2 : apply change
 int8_t hmiGet(bool draw) {
-  const int32_t lo = menuData.minValue, hi = menuData.maxValue, cval = menuData.value;
-  const EncoderState encoder_diffState = TERN(SMOOTH_ENCODER_MENUITEMS, get_encoder_state(), encoderReceiveAnalyze());
+  const int32_t lo = menuData.minValue;
+  const int32_t hi = menuData.maxValue;
+  const int32_t cval = menuData.value;
+  EncoderState encoder_diffState = TERN(SMOOTH_ENCODER_MENUITEMS, get_encoder_state(), encoderReceiveAnalyze());
   if (encoder_diffState != ENCODER_DIFF_NO) {
     if (applyEncoder(encoder_diffState, menuData.value)) {
       encoderRate.enabled = false;
@@ -298,7 +300,7 @@ int8_t hmiGet(bool draw) {
 
 // Set and draw a value using the encoder
 void hmiSetDraw() {
-  const int8_t val = hmiGet(true);
+  int8_t val = hmiGet(true);
   switch (val) {
     case 0: return;
     case 1: if (menuData.liveUpdate) menuData.liveUpdate(); break;
@@ -308,7 +310,7 @@ void hmiSetDraw() {
 
 // Set an value without drawing
 void hmiSetNoDraw() {
-  const int8_t val = hmiGet(false);
+  int8_t val = hmiGet(false);
   switch (val) {
     case 0: return;
     case 1: if (menuData.liveUpdate) menuData.liveUpdate(); break;
@@ -318,7 +320,7 @@ void hmiSetNoDraw() {
 
 // Set an integer pointer variable using the encoder
 void hmiSetPInt() {
-  const int8_t val = hmiGet(true);
+  int8_t val = hmiGet(true);
   switch (val) {
     case 0: return;
     case 1: if (menuData.liveUpdate) menuData.liveUpdate(); break;

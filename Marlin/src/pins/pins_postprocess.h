@@ -477,10 +477,6 @@
   #undef PS_ON_PIN
   #define PS_ON_PIN -1
 #endif
-#if DISABLED(PSU_OFF_REDUNDANT) || !defined(PS_ON1_PIN)
-  #undef PS_ON1_PIN
-  #define PS_ON1_PIN -1
-#endif
 #ifndef KILL_PIN
   #define KILL_PIN -1
 #endif
@@ -491,20 +487,8 @@
   #define SUICIDE_PIN_STATE LOW
 #endif
 
-#if PIN_EXISTS(SERVO5)
-  #define NUM_SERVO_PLUGS 6
-#elif PIN_EXISTS(SERVO4)
-  #define NUM_SERVO_PLUGS 5
-#elif PIN_EXISTS(SERVO3)
+#ifndef NUM_SERVO_PLUGS
   #define NUM_SERVO_PLUGS 4
-#elif PIN_EXISTS(SERVO2)
-  #define NUM_SERVO_PLUGS 3
-#elif PIN_EXISTS(SERVO1)
-  #define NUM_SERVO_PLUGS 2
-#elif PIN_EXISTS(SERVO0)
-  #define NUM_SERVO_PLUGS 1
-#else
-  #define NUM_SERVO_PLUGS 0
 #endif
 
 // Only used within pins files
@@ -519,12 +503,12 @@
   #ifdef X_STOP_PIN
     #if X_HOME_TO_MIN
       #define X_MIN_PIN X_STOP_PIN
-    #elif X_HOME_TO_MAX
+    #else
       #define X_MAX_PIN X_STOP_PIN
     #endif
   #elif X_HOME_TO_MIN
     #define X_STOP_PIN X_MIN_PIN
-  #elif X_HOME_TO_MAX
+  #else
     #define X_STOP_PIN X_MAX_PIN
   #endif
   #if !defined(X2_STOP_PIN) && ENABLED(X_DUAL_ENDSTOPS) && PIN_EXISTS(X_STOP)
@@ -536,12 +520,12 @@
   #ifdef Y_STOP_PIN
     #if Y_HOME_TO_MIN
       #define Y_MIN_PIN Y_STOP_PIN
-    #elif Y_HOME_TO_MAX
+    #else
       #define Y_MAX_PIN Y_STOP_PIN
     #endif
   #elif Y_HOME_TO_MIN
     #define Y_STOP_PIN Y_MIN_PIN
-  #elif X_HOME_TO_MAX
+  #else
     #define Y_STOP_PIN Y_MAX_PIN
   #endif
   #if !defined(Y2_STOP_PIN) && ENABLED(Y_DUAL_ENDSTOPS) && PIN_EXISTS(Y_STOP)
@@ -553,12 +537,12 @@
   #ifdef Z_STOP_PIN
     #if Z_HOME_TO_MIN
       #define Z_MIN_PIN Z_STOP_PIN
-    #elif Z_HOME_TO_MAX
+    #else
       #define Z_MAX_PIN Z_STOP_PIN
     #endif
   #elif Z_HOME_TO_MIN
     #define Z_STOP_PIN Z_MIN_PIN
-  #elif Z_HOME_TO_MAX
+  #else
     #define Z_STOP_PIN Z_MAX_PIN
   #endif
   #if ENABLED(Z_MULTI_ENDSTOPS) && PIN_EXISTS(Z_STOP)
@@ -578,12 +562,12 @@
   #ifdef I_STOP_PIN
     #if I_HOME_TO_MIN
       #define I_MIN_PIN I_STOP_PIN
-    #elif I_HOME_TO_MAX
+    #else
       #define I_MAX_PIN I_STOP_PIN
     #endif
   #elif I_HOME_TO_MIN
     #define I_STOP_PIN I_MIN_PIN
-  #elif I_HOME_TO_MAX
+  #else
     #define I_STOP_PIN I_MAX_PIN
   #endif
 #endif
@@ -592,12 +576,12 @@
   #ifdef J_STOP_PIN
     #if J_HOME_TO_MIN
       #define J_MIN_PIN J_STOP_PIN
-    #elif J_HOME_TO_MAX
+    #else
       #define J_MAX_PIN J_STOP_PIN
     #endif
   #elif J_HOME_TO_MIN
     #define J_STOP_PIN J_MIN_PIN
-  #elif J_HOME_TO_MAX
+  #else
     #define J_STOP_PIN J_MAX_PIN
   #endif
 #endif
@@ -606,12 +590,12 @@
   #ifdef K_STOP_PIN
     #if K_HOME_TO_MIN
       #define K_MIN_PIN K_STOP_PIN
-    #elif K_HOME_TO_MAX
+    #else
       #define K_MAX_PIN K_STOP_PIN
     #endif
   #elif K_HOME_TO_MIN
     #define K_STOP_PIN K_MIN_PIN
-  #elif K_HOME_TO_MAX
+  #else
     #define K_STOP_PIN K_MAX_PIN
   #endif
 #endif
@@ -620,12 +604,12 @@
   #ifdef U_STOP_PIN
     #if U_HOME_TO_MIN
       #define U_MIN_PIN U_STOP_PIN
-    #elif U_HOME_TO_MAX
+    #else
       #define U_MAX_PIN U_STOP_PIN
     #endif
   #elif U_HOME_TO_MIN
     #define U_STOP_PIN U_MIN_PIN
-  #elif U_HOME_TO_MAX
+  #else
     #define U_STOP_PIN U_MAX_PIN
   #endif
 #endif
@@ -634,12 +618,12 @@
   #ifdef V_STOP_PIN
     #if V_HOME_TO_MIN
       #define V_MIN_PIN V_STOP_PIN
-    #elif V_HOME_TO_MAX
+    #else
       #define V_MAX_PIN V_STOP_PIN
     #endif
   #elif V_HOME_TO_MIN
     #define V_STOP_PIN V_MIN_PIN
-  #elif V_HOME_TO_MAX
+  #else
     #define V_STOP_PIN V_MAX_PIN
   #endif
 #endif
@@ -648,12 +632,12 @@
   #ifdef W_STOP_PIN
     #if W_HOME_TO_MIN
       #define W_MIN_PIN W_STOP_PIN
-    #elif W_HOME_TO_MAX
+    #else
       #define W_MAX_PIN W_STOP_PIN
     #endif
   #elif W_HOME_TO_MIN
     #define W_STOP_PIN W_MIN_PIN
-  #elif W_HOME_TO_MAX
+  #else
     #define W_STOP_PIN W_MAX_PIN
   #endif
 #endif
@@ -1727,12 +1711,3 @@
 #undef DIAG_REMAPPED
 #undef _E_DIAG_EXISTS
 #undef E_DIAG_EXISTS
-
-// Get a NeoPixel pin from the LCD or board, if provided
-#ifndef NEOPIXEL_PIN
-  #ifdef LCD_NEOPIXEL_PIN
-    #define NEOPIXEL_PIN LCD_NEOPIXEL_PIN
-  #elif defined(BOARD_NEOPIXEL_PIN)
-    #define NEOPIXEL_PIN BOARD_NEOPIXEL_PIN
-  #endif
-#endif

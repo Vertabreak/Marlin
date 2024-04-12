@@ -28,8 +28,6 @@
 #include "../../../module/stepper.h"
 
 void GcodeSuite::M593_report(const bool forReplay/*=true*/) {
-  TERN_(MARLIN_SMALL_BUILD, return);
-
   report_heading_etc(forReplay, F("Input Shaping"));
   #if ENABLED(INPUT_SHAPING_X)
     SERIAL_ECHOLNPGM("  M593 X"
@@ -80,7 +78,7 @@ void GcodeSuite::M593() {
       if (for_Y) stepper.set_shaping_frequency(Y_AXIS, freq);
     }
     else
-      SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Frequency (F) must be greater than ", min_freq, " or 0 to disable"));
+      SERIAL_ECHOLNPGM("?Frequency (F) must be greater than ", min_freq, " or 0 to disable");
   }
 }
 

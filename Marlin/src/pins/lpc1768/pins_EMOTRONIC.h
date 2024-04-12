@@ -138,7 +138,6 @@
 //
 // LCD / Controller
 //
-
 #if ENABLED(EMOTION_TECH_LCD)
   #define BEEPER_PIN                 EXP2_01_PIN
   #define DOGLCD_A0                  EXP2_06_PIN

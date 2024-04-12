@@ -25,6 +25,7 @@
  * Copyright (c) 2019 WEEDO3D Perron
  * ATmega2560
  */
+
 #pragma once
 
 #include "env_validate.h"
@@ -92,7 +93,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                          37
 

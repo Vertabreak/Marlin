@@ -160,11 +160,7 @@
 //
 
 #ifndef SDCARD_CONNECTION
-  #if ENABLED(NO_LCD_SDCARD)
-    #define SDCARD_CONNECTION            ONBOARD
-  #else
-    #define SDCARD_CONNECTION                LCD
-  #endif
+  #define SDCARD_CONNECTION                  LCD
 #endif
 
 #if SD_CONNECTION_IS(LCD)

@@ -69,6 +69,10 @@
  */
 #include "../../inc/MarlinConfig.h"
 
+#if HAS_TMC26X
+  #include "TMC26X.h"
+#endif
+
 #if HAS_TRINAMIC_CONFIG
   #include "trinamic.h"
 #endif

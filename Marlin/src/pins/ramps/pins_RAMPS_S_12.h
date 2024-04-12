@@ -244,10 +244,13 @@
   #endif
 #endif
 
-//
-// LCD / Controller
-//
+//////////////////////////
+// LCDs and Controllers //
+//////////////////////////
 
+//
+// LCD Display output pins
+//
 #if HAS_WIRED_LCD
   #define BEEPER_PIN                          45
   #define LCD_PINS_RS                         19

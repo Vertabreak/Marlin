@@ -25,6 +25,7 @@
   extern "C" {
 #endif
 
+
 void lv_draw_wifi();
 void lv_clear_wifi();
 void disp_wifi_state();

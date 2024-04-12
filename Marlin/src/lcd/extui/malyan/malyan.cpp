@@ -106,6 +106,7 @@ void set_lcd_error(FSTR_P const error, FSTR_P const component/*=nullptr*/) {
   write_to_lcd(F("}"));
 }
 
+
 /**
  * Process an LCD 'C' command.
  * These are currently all temperature commands
@@ -129,7 +130,7 @@ void process_lcd_c_command(const char *command) {
     case 'C': // Cope with both V1 early rev and later LCDs.
     case 'S':
       feedrate_percentage = target_val * 10;
-      LIMIT(feedrate_percentage, SPEED_EDIT_MIN, SPEED_EDIT_MAX);
+      LIMIT(feedrate_percentage, 10, 999);
       break;
 
     case 'T':

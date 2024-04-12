@@ -1,0 +1,19 @@
+{
+  "name": "LiquidCrystal_AIP31068",
+  "version": "1.0.4",
+  "keywords": "LCD, liquidcrystal, I2C, SPI, AIP31068",
+  "description": "A library for AIP31068 based I2C/SPI LCD displays",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/red-scorp/LiquidCrystal_AIP31068.git"
+  },
+  "frameworks": "arduino",
+  "platforms":
+  [
+    "atmelavr",
+    "atmelmegaavr",
+    "ststm32",
+    "espressif8266"
+  ]
+}

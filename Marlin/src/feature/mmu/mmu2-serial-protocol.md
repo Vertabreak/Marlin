@@ -28,7 +28,10 @@ Now we are sure MMU is available and ready. If there was a timeout or other comm
 - *Build number* is an integer value and has to be >=126, or =>132 if 12V mode is enabled
 - *FINDA status* is 1 if the filament is loaded to the extruder, 0 otherwise
 
+
 *Build number* is checked against the required value, if it does not match, printer is halted.
+
+
 
 Toolchange
 ==========
@@ -51,6 +54,7 @@ When done, the MMU sends
 We don't wait for a response here but immediately continue with the next G-code which should
 be one or more extruder moves to feed the filament into the hotend.
 
+
 FINDA status
 ============
 
@@ -58,6 +62,8 @@ FINDA status
 - MMU => '*FINDA status*\n'
 
 *FINDA status* is 1 if the is filament loaded to the extruder, 0 otherwise. This could be used as filament runout sensor if probed regularly.
+
+
 
 Load filament
 =============
@@ -68,6 +74,7 @@ MMU will feed filament down to the extruder, when done
 
 - MMU => 'ok\n'
 
+
 Unload filament
 =============
 
@@ -76,6 +83,8 @@ Unload filament
 MMU will retract current filament from the extruder, when done
 
 - MMU => 'ok\n'
+
+
 
 Eject filament
 ==============

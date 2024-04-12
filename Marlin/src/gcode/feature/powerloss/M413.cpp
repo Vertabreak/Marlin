@@ -35,9 +35,6 @@
  * Parameters
  *   S[bool] - Flag to enable / disable.
  *             If omitted, report current state.
- *
- * With PLR_BED_THRESHOLD:
- *   B         Bed Temperature above which recovery will proceed without asking permission.
  */
 void GcodeSuite::M413() {
 
@@ -45,11 +42,6 @@ void GcodeSuite::M413() {
     recovery.enable(parser.value_bool());
   else
     M413_report();
-
-  #if HAS_PLR_BED_THRESHOLD
-    if (parser.seenval('B'))
-      recovery.bed_temp_threshold = parser.value_celsius();
-  #endif
 
   #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
     if (parser.seen("RL")) recovery.load();
@@ -64,14 +56,8 @@ void GcodeSuite::M413() {
 }
 
 void GcodeSuite::M413_report(const bool forReplay/*=true*/) {
-  TERN_(MARLIN_SMALL_BUILD, return);
-
   report_heading_etc(forReplay, F(STR_POWER_LOSS_RECOVERY));
-  SERIAL_ECHOPGM("  M413 S", AS_DIGIT(recovery.enabled)
-    #if HAS_PLR_BED_THRESHOLD
-      , " B", recovery.bed_temp_threshold
-    #endif
-  );
+  SERIAL_ECHOPGM("  M413 S", AS_DIGIT(recovery.enabled), " ; ");
   serialprintln_onoff(recovery.enabled);
 }
 

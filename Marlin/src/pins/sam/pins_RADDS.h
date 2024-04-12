@@ -224,7 +224,6 @@
 //
 // LCD / Controller
 //
-
 #if HAS_WIRED_LCD
 
   #if ENABLED(RADDS_DISPLAY)

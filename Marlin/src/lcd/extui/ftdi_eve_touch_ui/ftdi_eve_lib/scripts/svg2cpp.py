@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
 # Written By Marcio Teixeira 2018 - Aleph Objects, Inc.
 #
@@ -17,8 +17,6 @@
 
 from __future__ import print_function
 import argparse,re,sys
-
-from html.parser import HTMLParser
 
 usage = '''
 This program extracts line segments from a SVG file and writes
@@ -109,16 +107,19 @@ class ComputeBoundingBox:
     print("constexpr float y_max = %f;" % self.y_max)
     print()
 
-  def from_svg_view_box(self, viewbox):
-    m = re.search('([0-9-.]+) ([0-9-.]+) ([0-9-.]+) ([0-9-.]+)', viewbox)
-    if m:
-      self.x_min = float(m[1])
-      self.y_min = float(m[2])
-      self.x_max = float(m[3])
-      self.y_max = float(m[4])
-      return True
+  def from_svg_view_box(self, svg):
+    s = re.search('<svg[^>]+>', svg);
+    if s:
+      m = re.search('viewBox="([0-9-.]+) ([0-9-.]+) ([0-9-.]+) ([0-9-.]+)"', svg)
+      if m:
+        self.x_min = float(m[1])
+        self.y_min = float(m[2])
+        self.x_max = float(m[3])
+        self.y_max = float(m[4])
+        return True
     return False
 
+# op
 class WriteDataStructure:
   def __init__(self, bounding_box):
     self.bounds = bounding_box
@@ -142,29 +143,19 @@ class WriteDataStructure:
     print("const PROGMEM uint16_t", id + "[] = {" + ", ".join (self.hex_words) + "};")
     self.hex_words = []
 
-class SVGParser(HTMLParser):
-  def __init__(self, args):
-    super().__init__()
-    self.args   = args
-    self.tags   = []
-    self.groups = []
-    self.op     = None
-    self.restart()
-
-  def set_consumer(self, op):
+class Parser:
+  def __init__(self, op):
     self.op = op
-    if self.op:
-      self.op.reset()
+    self.reset()
 
-  def restart(self):
+  def reset(self):
     self.last_x = 0
     self.last_y = 0
     self.initial_x = 0
     self.initial_y = 0
 
   def process_svg_path_L_or_M(self, cmd, x, y):
-    if self.op:
-      self.op.command(cmd, x, y)
+    self.op.command(cmd, x, y)
     self.last_x = x
     self.last_y = y
     if cmd == "M":
@@ -248,71 +239,42 @@ class SVGParser(HTMLParser):
         print("Syntax error:", d, "in path", id, "\n", file=sys.stderr)
         quit()
 
-  def find_attr(attrs, what):
-    for attr, value in attrs:
-      if attr == what:
-         return value
+  def process_svg_paths(self, svg):
+    self.op.reset()
+    for path in re.findall('<path[^>]+>', svg):
+      id = "<none>"
+      m = re.search(' id="(.*)"', path)
+      if m:
+        id = m[1]
 
-  def layer_matches(self):
-    """ Are we in the correct layer?"""
-    if not self.args.layer:
-        return True
-    for l in self.groups:
-      if l and l.find(self.args.layer) != -1:
-        return True
-    return False
-
-  def handle_starttag(self, tag, attrs):
-    self.tags.append(tag)
-    if tag == 'svg':
-      self.viewbox = SVGParser.find_attr(attrs, 'viewbox')
-    if tag == 'g':
-      label = SVGParser.find_attr(attrs, 'inkscape:label')
-      self.groups.append(label)
-      if label and self.layer_matches():
-        print("Reading layer:", label, file=sys.stderr)
-    if tag == 'path' and self.layer_matches():
-      id = SVGParser.find_attr(attrs, 'id')
-      transform = SVGParser.find_attr(attrs, 'transform')
-      if transform:
+      m = re.search(' transform="(.*)"', path)
+      if m:
         print("Found transform in path", id, "! Cannot process file!", file=sys.stderr)
         quit()
-      d = SVGParser.find_attr(attrs, 'd')
-      if d:
-        self.process_svg_path_data(id, d)
-        if self.op:
-          self.op.path_finished(id)
-        self.restart()
 
-  def handle_endtag(self, tag):
-    if tag == 'g':
-      self.groups.pop()
-    if tag != self.tags.pop():
-      print("Error popping tag off list")
+      m = re.search(' d="(.*)"', path)
+      if m:
+        self.process_svg_path_data(id, m[1])
+        self.op.path_finished(id)
+        self.reset()
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("filename")
-  parser.add_argument('--layer', help='only include layers which have this string in their names')
   args = parser.parse_args()
 
   f = open(args.filename, "r")
   data = f.read()
 
-  # First pass to grab viewbox
-  p = SVGParser(args)
-  p.feed(data)
+  print(header)
 
   b = ComputeBoundingBox()
-  if not b.from_svg_view_box(p.viewbox):
+  if not b.from_svg_view_box(data):
     # Can't find the view box, so use the bounding box of the elements themselves.
-    p = SVGParser(args)
-    p.set_consumer(b)
-    p.feed(data)
-    b.write()
+    p = Parser(b)
+    p.process_svg_paths(data)
+  b.write()
 
-  # Last pass to process paths
   w = WriteDataStructure(b)
-  p = SVGParser(args)
-  p.set_consumer(w)
-  p.feed(data)
+  p = Parser(w)
+  p.process_svg_paths(data)

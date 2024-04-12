@@ -29,6 +29,8 @@ e-mail   :  support@circuitsathome.com
 #else
 #define __ADDRESS_H__
 
+
+
 /* NAK powers. To save space in endpoint data structure, amount of retries before giving up and returning 0x4 is stored in */
 /* bmNakPower as a power of 2. The actual nak_limit is then calculated as nak_limit = ( 2^bmNakPower - 1) */
 #define UHS_USB_NAK_MAX_POWER               14      // NAK binary order maximum value
@@ -189,6 +191,7 @@ public:
 
                 return (!index) ? NULL : &thePool[index];
         };
+
 
         // Allocates new address
 

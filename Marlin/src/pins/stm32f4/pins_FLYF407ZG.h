@@ -283,7 +283,6 @@
 //
 // LCD / Controller
 //
-
 #if IS_RRD_SC
   #define BEEPER_PIN                 EXP1_01_PIN
   #define LCD_PINS_RS                EXP1_04_PIN

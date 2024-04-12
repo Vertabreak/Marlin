@@ -21,13 +21,7 @@
  */
 #pragma once
 
-// The Octopus Pro V1 has shipped with both STM32F4 and STM32H7 MCUs.
-// Ensure the correct env_validate.h file is included based on the build environment used.
-#if NOT_TARGET(STM32H7)
-  #include "env_validate.h"
-#else
-  #include "../stm32h7/env_validate.h"
-#endif
+#include "env_validate.h"
 
 #define HAS_OTG_USB_HOST_SUPPORT                  // USB Flash Drive support
 #define USES_DIAG_JUMPERS
@@ -124,13 +118,6 @@
 //
 #ifndef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN                   PB7
-#endif
-
-//
-// Probe enable
-//
-#if ENABLED(PROBE_ENABLE_DISABLE) && !defined(PROBE_ENABLE_PIN)
-  #define PROBE_ENABLE_PIN            SERVO0_PIN
 #endif
 
 //
@@ -248,7 +235,7 @@
 // SD Support
 //
 #ifndef SDCARD_CONNECTION
-  #if HAS_WIRED_LCD && DISABLED(NO_LCD_SDCARD)
+  #if HAS_WIRED_LCD
     #define SDCARD_CONNECTION                LCD
   #else
     #define SDCARD_CONNECTION            ONBOARD
@@ -418,9 +405,8 @@
 #endif // BTT_MOTOR_EXPANSION
 
 //
-// LCD / Controller
+// LCDs and Controllers
 //
-
 #if IS_TFTGLCD_PANEL
 
   #if ENABLED(TFTGLCD_PANEL_SPI)
@@ -508,8 +494,7 @@
     #endif
 
   #endif
-
-#endif // HAS_WIRED_LCD
+#endif  // HAS_WIRED_LCD
 
 // Alter timing for graphical display
 #if IS_U8GLIB_ST7920
@@ -539,8 +524,8 @@
 //
 // NeoPixel LED
 //
-#ifndef BOARD_NEOPIXEL_PIN
-  #define BOARD_NEOPIXEL_PIN                PB0
+#ifndef NEOPIXEL_PIN
+  #define NEOPIXEL_PIN                      PB0
 #endif
 
 #if ENABLED(WIFISUPPORT)
