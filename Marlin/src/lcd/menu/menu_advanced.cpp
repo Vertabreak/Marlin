@@ -23,6 +23,7 @@
 //
 // Advanced Settings Menus
 //
+
 #include "../../inc/MarlinConfigPre.h"
 
 #if HAS_MARLINUI_MENU
@@ -54,10 +55,6 @@
 
 #if ENABLED(PASSWORD_FEATURE)
   #include "../../feature/password/password.h"
-#endif
-
-#if ENABLED(BUILD_VOLUME_WIZARD)
-  #include "../../gcode/gcode.h"
 #endif
 
 void menu_tmc();
@@ -139,7 +136,7 @@ void menu_backlash();
       }
     #endif
 
-    #if ENABLED(ADVANCED_PAUSE_FEATURE)
+    #if ENABLED(CONFIGURE_FILAMENT_CHANGE)
       constexpr float extrude_maxlength = TERN(PREVENT_LENGTHY_EXTRUDE, EXTRUDE_MAXLENGTH, 999);
 
       EDIT_ITEM_FAST(float4, MSG_FILAMENT_UNLOAD, &fc_settings[active_extruder].unload_length, 0, extrude_maxlength);
@@ -374,8 +371,8 @@ void menu_backlash();
 
       #define _MPC_EDIT_ITEMS(N) \
         MPC_t &mpc = thermalManager.temp_hotend[MenuItemBase::itemIndex].mpc; \
-        EDIT_ITEM_FAST_N(float31sign, N, MSG_MPC_POWER_E, &mpc.heater_power, 1, 200); \
-        EDIT_ITEM_FAST_N(float31sign, N, MSG_MPC_BLOCK_HEAT_CAPACITY_E, &mpc.block_heat_capacity, 0, 40); \
+        EDIT_ITEM_FAST_N(float41, N, MSG_MPC_POWER_E, &mpc.heater_power, 1, 200); \
+        EDIT_ITEM_FAST_N(float31, N, MSG_MPC_BLOCK_HEAT_CAPACITY_E, &mpc.block_heat_capacity, 0, 40); \
         EDIT_ITEM_FAST_N(float43, N, MSG_SENSOR_RESPONSIVENESS_E, &mpc.sensor_responsiveness, 0, 1); \
         EDIT_ITEM_FAST_N(float43, N, MSG_MPC_AMBIENT_XFER_COEFF_E, &mpc.ambient_xfer_coeff_fan0, 0, 1)
 
@@ -565,24 +562,24 @@ void menu_backlash();
       #if ENABLED(INPUT_SHAPING_X)
         editable.decimal = stepper.get_shaping_frequency(X_AXIS);
         if (editable.decimal) {
-          ACTION_ITEM_N(X_AXIS, MSG_SHAPING_DISABLE, []{ stepper.set_shaping_frequency(X_AXIS, 0.0f); });
-          EDIT_ITEM_FAST_N(float61, X_AXIS, MSG_SHAPING_FREQ, &editable.decimal, min_frequency, 200.0f, []{ stepper.set_shaping_frequency(X_AXIS, editable.decimal); });
+          ACTION_ITEM_N(X_AXIS, MSG_SHAPING_DISABLE, []{ stepper.set_shaping_frequency(X_AXIS, 0.0f); ui.refresh(); });
+          EDIT_ITEM_FAST_N(float41, X_AXIS, MSG_SHAPING_FREQ, &editable.decimal, min_frequency, 200.0f, []{ stepper.set_shaping_frequency(X_AXIS, editable.decimal); });
           editable.decimal = stepper.get_shaping_damping_ratio(X_AXIS);
           EDIT_ITEM_FAST_N(float42_52, X_AXIS, MSG_SHAPING_ZETA, &editable.decimal, 0.0f, 1.0f, []{ stepper.set_shaping_damping_ratio(X_AXIS, editable.decimal); });
         }
         else
-          ACTION_ITEM_N(X_AXIS, MSG_SHAPING_ENABLE, []{ stepper.set_shaping_frequency(X_AXIS, (SHAPING_FREQ_X) ?: (SHAPING_MIN_FREQ)); });
+          ACTION_ITEM_N(X_AXIS, MSG_SHAPING_ENABLE, []{ stepper.set_shaping_frequency(X_AXIS, (SHAPING_FREQ_X) ?: (SHAPING_MIN_FREQ)); ui.refresh(); });
       #endif
       #if ENABLED(INPUT_SHAPING_Y)
         editable.decimal = stepper.get_shaping_frequency(Y_AXIS);
         if (editable.decimal) {
-          ACTION_ITEM_N(Y_AXIS, MSG_SHAPING_DISABLE, []{ stepper.set_shaping_frequency(Y_AXIS, 0.0f); });
-          EDIT_ITEM_FAST_N(float61, Y_AXIS, MSG_SHAPING_FREQ, &editable.decimal, min_frequency, 200.0f, []{ stepper.set_shaping_frequency(Y_AXIS, editable.decimal); });
+          ACTION_ITEM_N(Y_AXIS, MSG_SHAPING_DISABLE, []{ stepper.set_shaping_frequency(Y_AXIS, 0.0f); ui.refresh(); });
+          EDIT_ITEM_FAST_N(float41, Y_AXIS, MSG_SHAPING_FREQ, &editable.decimal, min_frequency, 200.0f, []{ stepper.set_shaping_frequency(Y_AXIS, editable.decimal); });
           editable.decimal = stepper.get_shaping_damping_ratio(Y_AXIS);
           EDIT_ITEM_FAST_N(float42_52, Y_AXIS, MSG_SHAPING_ZETA, &editable.decimal, 0.0f, 1.0f, []{ stepper.set_shaping_damping_ratio(Y_AXIS, editable.decimal); });
         }
         else
-          ACTION_ITEM_N(Y_AXIS, MSG_SHAPING_ENABLE, []{ stepper.set_shaping_frequency(Y_AXIS, (SHAPING_FREQ_Y) ?: (SHAPING_MIN_FREQ)); });
+          ACTION_ITEM_N(Y_AXIS, MSG_SHAPING_ENABLE, []{ stepper.set_shaping_frequency(Y_AXIS, (SHAPING_FREQ_Y) ?: (SHAPING_MIN_FREQ)); ui.refresh(); });
       #endif
 
       END_MENU();
@@ -590,17 +587,11 @@ void menu_backlash();
 
   #endif
 
-  #if HAS_CLASSIC_JERK
+  #if ENABLED(CLASSIC_JERK)
 
     void menu_advanced_jerk() {
       START_MENU();
       BACK_ITEM(MSG_ADVANCED_SETTINGS);
-
-      #if HAS_JUNCTION_DEVIATION
-        EDIT_ITEM(float43, MSG_JUNCTION_DEVIATION, &planner.junction_deviation_mm, 0.001f, TERN(LIN_ADVANCE, 0.3f, 0.5f)
-          OPTARG(LIN_ADVANCE, planner.recalculate_max_e_jerk)
-        );
-      #endif
 
       constexpr xyze_float_t max_jerk_edit =
         #ifdef MAX_JERK_EDIT_VALUES
@@ -631,10 +622,10 @@ void menu_backlash();
       START_MENU();
       BACK_ITEM(MSG_ADVANCED_SETTINGS);
       #if HAS_PROBE_XY_OFFSET
-        EDIT_ITEM(float31sign, MSG_ZPROBE_XOFFSET, &probe.offset.x, -(X_BED_SIZE), X_BED_SIZE);
-        EDIT_ITEM(float31sign, MSG_ZPROBE_YOFFSET, &probe.offset.y, -(Y_BED_SIZE), Y_BED_SIZE);
+        EDIT_ITEM(float31sign, MSG_ZPROBE_XOFFSET, &probe.offset.x, PROBE_OFFSET_XMIN, PROBE_OFFSET_XMAX);
+        EDIT_ITEM(float31sign, MSG_ZPROBE_YOFFSET, &probe.offset.y, PROBE_OFFSET_YMIN, PROBE_OFFSET_YMAX);
       #endif
-      EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
+      EDIT_ITEM(LCD_Z_OFFSET_TYPE, MSG_ZPROBE_ZOFFSET, &probe.offset.z, PROBE_OFFSET_ZMIN, PROBE_OFFSET_ZMAX);
 
       #if ENABLED(PROBE_OFFSET_WIZARD)
         SUBMENU(MSG_PROBE_WIZARD, goto_probe_offset_wizard);
@@ -650,32 +641,38 @@ void menu_backlash();
 
 #endif // !SLIM_LCD_MENUS
 
-// M92 Steps-per-mm
-void menu_advanced_steps_per_mm() {
-  START_MENU();
-  BACK_ITEM(MSG_ADVANCED_SETTINGS);
+#if ENABLED(EDITABLE_STEPS_PER_UNIT)
 
-  LOOP_NUM_AXES(a)
-    EDIT_ITEM_FAST_N(float72, a, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[a], 5, 9999, []{ planner.refresh_positioning(); });
+  // M92 Steps-per-mm
+  void menu_advanced_steps_per_mm() {
+    START_MENU();
+    BACK_ITEM(MSG_ADVANCED_SETTINGS);
 
-  #if ENABLED(DISTINCT_E_FACTORS)
-    for (uint8_t n = 0; n < E_STEPPERS; ++n)
-      EDIT_ITEM_FAST_N(float72, n, MSG_EN_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS_N(n)], 5, 9999, []{
-        const uint8_t e = MenuItemBase::itemIndex;
-        if (e == active_extruder)
-          planner.refresh_positioning();
-        else
-          planner.mm_per_step[E_AXIS_N(e)] = 1.0f / planner.settings.axis_steps_per_mm[E_AXIS_N(e)];
-      });
-  #elif E_STEPPERS
-    EDIT_ITEM_FAST_N(float72, E_AXIS, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS], 5, 9999, []{ planner.refresh_positioning(); });
-  #endif
+    LOOP_NUM_AXES(a)
+      EDIT_ITEM_FAST_N(float72, a, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[a], 5, 9999, []{ planner.refresh_positioning(); });
 
-  END_MENU();
-}
+    #if ENABLED(DISTINCT_E_FACTORS)
+      for (uint8_t n = 0; n < E_STEPPERS; ++n)
+        EDIT_ITEM_FAST_N(float72, n, MSG_EN_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS_N(n)], 5, 9999, []{
+          const uint8_t e = MenuItemBase::itemIndex;
+          if (e == active_extruder)
+            planner.refresh_positioning();
+          else
+            planner.mm_per_step[E_AXIS_N(e)] = 1.0f / planner.settings.axis_steps_per_mm[E_AXIS_N(e)];
+        });
+    #elif E_STEPPERS
+      EDIT_ITEM_FAST_N(float72, E_AXIS, MSG_N_STEPS, &planner.settings.axis_steps_per_mm[E_AXIS], 5, 9999, []{ planner.refresh_positioning(); });
+    #endif
+
+    END_MENU();
+  }
+
+#endif // EDITABLE_STEPS_PER_UNIT
 
 void menu_advanced_settings() {
-  const bool is_busy = printer_busy();
+  #if ANY(POLARGRAPH, SHAPING_MENU, HAS_BED_PROBE, EDITABLE_STEPS_PER_UNIT)
+    const bool is_busy = printer_busy();
+  #endif
 
   #if ENABLED(SD_FIRMWARE_UPDATE)
     bool sd_update_state = settings.sd_update_status();
@@ -714,12 +711,12 @@ void menu_advanced_settings() {
       if (!is_busy) SUBMENU(MSG_INPUT_SHAPING, menu_advanced_input_shaping);
     #endif
 
-    #if HAS_CLASSIC_JERK
+    #if ENABLED(CLASSIC_JERK)
       // M205 - Max Jerk
       SUBMENU(MSG_JERK, menu_advanced_jerk);
     #elif HAS_JUNCTION_DEVIATION
       EDIT_ITEM(float43, MSG_JUNCTION_DEVIATION, &planner.junction_deviation_mm, 0.001f, 0.3f
-        OPTARG(LIN_ADVANCE, planner.recalculate_max_e_jerk)
+        OPTARG(HAS_LINEAR_E_JERK, planner.recalculate_max_e_jerk)
       );
     #endif
 
@@ -731,8 +728,9 @@ void menu_advanced_settings() {
   #endif // !SLIM_LCD_MENUS
 
   // M92 - Steps Per mm
-  if (!is_busy)
-    SUBMENU(MSG_STEPS_PER_MM, menu_advanced_steps_per_mm);
+  #if ENABLED(EDITABLE_STEPS_PER_UNIT)
+    if (!is_busy) SUBMENU(MSG_STEPS_PER_MM, menu_advanced_steps_per_mm);
+  #endif
 
   #if ENABLED(BACKLASH_GCODE)
     SUBMENU(MSG_BACKLASH, menu_backlash);
@@ -797,66 +795,4 @@ void menu_advanced_settings() {
   END_MENU();
 }
 
-  /**
-   * Build Volume Wizard - Guide user to find the proper build volume settings
-   */
-  #if ENABLED(BUILD_VOLUME_WIZARD)
-  void _lcd_build_volume_wizard_min() {
-    char bvw_gcode[30];
-    sprintf_P(bvw_gcode, PSTR("M1005O"));
-  }
-
-  void _lcd_build_volume_wizard_max(){
-    char bvw_gcode[30];
-    sprintf_P(bvw_gcode, PSTR("M1005D"));
-  }
-
-  void GcodeSuite::M1005() {
-
-    if (parser.seenval('O')) { //Find XY0 Bed Edge Origin 
-    char bvw_gcode[30];
-
-    sprintf_P(bvw_gcode, PSTR("G28\nG0X0Y0)"));
-
-      #if HAS_STATUS_MESSAGE
-        sprintf_P(bvw_gcode, PSTR("M117 Align nozzle to bed edge noting differance add to #define X_MIN_POS & Y_MIN_POS"));
-      #endif
-      SERIAL_ECHOLNPGM("Align Align nozzle to bed edge noting differance add to #define X_MIN_POS & Y_MIN_POS");
-
-    queue.inject(bvw_gcode);
-  }
-
-    if (parser.seenval('D')) { //Find XY Bedsize Bed Edge Destination 
-    char bvw_gcode[30];
-
-    sprintf_P(bvw_gcode, PSTR("G28\nG0X%iY%i"), X_MAX_POS, Y_MAX_POS);
-
-      #if HAS_STATUS_MESSAGE
-        sprintf_P(bvw_gcode, PSTR("M117 Align nozzle to bed edge noting differance add to #define X_BED_SIZE & Y_BED_SIZE"));
-      #endif
-      SERIAL_ECHOLNPGM("Align nozzle to bed edge noting differance add to #define X_BED_SIZE & Y_BED_SIZE");
-
-    queue.inject(bvw_gcode);
-      }
-  
-  }
-
-
-  void _menu_build_volume_wizard() {
-    START_MENU();
-    BACK_ITEM(MSG_CONFIGURATION);
-
-    #if ENABLED(HAS_SOFTWARE_ENDSTOPS)
-    EDIT_ITEM(bool, MSG_LCD_SOFT_ENDSTOPS, &soft_endstop._enabled);
-    #endif
-
-    ACTION_ITEM(MSG_BUILD_VOLUME_WIZARD_MIN_XY, _lcd_build_volume_wizard_min);
-
-    ACTION_ITEM(MSG_BUILD_VOLUME_WIZARD_MAX_XY, _lcd_build_volume_wizard_max);
-
-    ACTION_ITEM(MSG_INFO_SCREEN, ui.return_to_status);
-    END_MENU();
-  }
-#endif
-
-#endif // HAS_LCD_MENU
+#endif // HAS_MARLINUI_MENU
