@@ -2404,6 +2404,7 @@
     #define PTC_PROBE_HEATING_OFFSET 0.5  // (mm)
   #endif
 #endif
+#endif
 
 // @section extras
 
