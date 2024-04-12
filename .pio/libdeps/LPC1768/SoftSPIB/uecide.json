@@ -1,0 +1,18 @@
+{
+    "name": "SoftSPIB",
+    "provides": "SoftSPIB.h",
+    "license": "LICENSE.md",
+    "readme": "README.md",
+    "description": "Software SPI implementation with support of not 8-bit aligned transfers",
+    "category": "Communications",
+    "subcategory": "Serial",
+    "maintainer": "Andriy Golovnya <andriy.golovnya@gmail.com>",
+    "version": "1.1.2",
+    "family": "all",
+    "core": "all",
+    "install": {
+        "examples": "/",
+        "SoftSPI.cpp": "/",
+        "SoftSPI.h": "/"
+    }
+}
