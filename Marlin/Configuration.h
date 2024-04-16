@@ -20,6 +20,7 @@
  *
  */
 #pragma once
+//upsteam issue : global destructors keyed to 65535_1_HAL.cpp.o.20674
 
 //#define CONFIG_EXAMPLES_DIR "Geeetech/A10T"
 //#define CONVERT_TO_TRICYCLOPS //Disable mixing (8 virtual extruders) & use single nozzle control system (3 physical extruders)
