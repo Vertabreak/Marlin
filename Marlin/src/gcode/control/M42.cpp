@@ -44,7 +44,7 @@ void protected_pin_err() {
 }
 
 /**
- * M42: Change pin status via GCode
+ * M42: Change pin status via G-Code
  *
  *  P<pin>  Pin number (LED if omitted)
  *          For LPC1768 specify pin P1_02 as M42 P102,
@@ -79,7 +79,7 @@ void GcodeSuite::M42() {
       #ifdef OUTPUT_OPEN_DRAIN
         case 5: pinMode(pin, OUTPUT_OPEN_DRAIN); break;
       #endif
-      default: SERIAL_ECHOLNPGM("Invalid Pin Mode"); return;
+      default: SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Invalid Pin Mode")); return;
     }
   }
 
@@ -94,7 +94,7 @@ void GcodeSuite::M42() {
   #endif
 
   if (avoidWrite) {
-    SERIAL_ECHOLNPGM("?Cannot write to INPUT");
+    SERIAL_ECHOLNPGM(GCODE_ERR_MSG("Cannot write to INPUT"));
     return;
   }
 
