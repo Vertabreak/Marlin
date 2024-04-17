@@ -47,7 +47,7 @@
 
 void MarlinUI::tft_idle() {
   #if ENABLED(TOUCH_SCREEN)
-    if (TERN0(HAS_TOUCH_SLEEP, lcd_sleep_task())) return;
+    if (TERN0(HAS_DISPLAY_SLEEP, lcd_sleep_task())) return;
     if (draw_menu_navigation) {
       add_control(NAVIGATION_PAGE_UP_X, NAVIGATION_PAGE_UP_Y, PAGE_UP, imgPageUp, encoderTopLine > 0);
       add_control(NAVIGATION_PAGE_DOWN_X, NAVIGATION_PAGE_DOWN_Y, PAGE_DOWN, imgPageDown, encoderTopLine + LCD_HEIGHT < screen_items);
@@ -279,7 +279,6 @@ void MarlinUI::draw_status_screen() {
     tft.add_text(Z_VALUE_X - offset, Z_VALUE_Y, nhz ? COLOR_AXIS_NOT_HOMED : COLOR_AXIS_HOMED, tft_string);
   #endif
 
-
   #if ENABLED(LCD_SHOW_E_TOTAL) && defined(E_MARK_X) && defined(E_MARK_Y) && defined(E_VALUE_X) && defined(E_VALUE_Y)
     tft.add_text(E_MARK_X, E_MARK_Y, COLOR_AXIS_HOMED, "E");
     if (printingIsActive()) {
@@ -393,14 +392,14 @@ void MarlinUI::draw_status_screen() {
 }
 
 // Low-level draw_edit_screen can be used to draw an edit screen from anyplace
-void MenuEditItemBase::draw_edit_screen(FSTR_P const fstr, const char * const value/*=nullptr*/) {
+void MenuEditItemBase::draw_edit_screen(FSTR_P const ftpl, const char * const value/*=nullptr*/) {
   ui.encoder_direction_normal();
   TERN_(TOUCH_SCREEN, touch.clear());
 
   uint16_t line = 1;
 
   menu_line(line++);
-  tft_string.set(fstr, itemIndex, itemStringC, itemStringF);
+  tft_string.set(ftpl, itemIndex, itemStringC, itemStringF);
   tft_string.trim();
   tft.add_text(tft_string.center(TFT_WIDTH), MENU_TEXT_Y, COLOR_MENU_TEXT, tft_string);
 
@@ -457,13 +456,13 @@ void TFT::draw_edit_screen_buttons() {
 }
 
 // The Select Screen presents a prompt and two "buttons"
-void MenuItem_confirm::draw_select_screen(FSTR_P const yes, FSTR_P const no, const bool yesno, FSTR_P const pref, const char * const string/*=nullptr*/, FSTR_P const suff/*=nullptr*/) {
+void MenuItem_confirm::draw_select_screen(FSTR_P const yes, FSTR_P const no, const bool yesno, FSTR_P const fpre, const char * const string/*=nullptr*/, FSTR_P const fsuf/*=nullptr*/) {
   uint16_t line = 1;
 
   if (!string) line++;
 
   menu_line(line++);
-  tft_string.set(pref);
+  tft_string.set(fpre);
   tft_string.trim();
   tft.add_text(tft_string.center(TFT_WIDTH), MENU_TEXT_Y, COLOR_MENU_TEXT, tft_string);
 
@@ -474,9 +473,9 @@ void MenuItem_confirm::draw_select_screen(FSTR_P const yes, FSTR_P const no, con
     tft.add_text(tft_string.center(TFT_WIDTH), MENU_TEXT_Y, COLOR_MENU_TEXT, tft_string);
   }
 
-  if (suff) {
+  if (fsuf) {
     menu_line(line);
-    tft_string.set(suff);
+    tft_string.set(fsuf);
     tft_string.trim();
     tft.add_text(tft_string.center(TFT_WIDTH), MENU_TEXT_Y, COLOR_MENU_TEXT, tft_string);
   }
