@@ -35,7 +35,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60114",
+                "PLATFORMIO=60115",
                 "ARDUINO_AVR_MEGA2560",
                 "__MARLIN_FIRMWARE__",
                 "NDEBUG",
